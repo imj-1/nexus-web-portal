@@ -1,0 +1,37 @@
+.nexus-sidebar {
+  width: 260px; height: 100%;
+  background: var(--nexus-navy-2);
+  border-right: 1px solid var(--nexus-border);
+  display: flex; flex-direction: column;
+
+  .sidebar-header {
+    height: 68px; padding: 0 24px;
+    display: flex; align-items: center;
+    border-bottom: 1px solid var(--nexus-border);
+
+    .sidebar-brand {
+      font-family: var(--nexus-fd); font-size: 18px; font-weight: 600;
+      letter-spacing: 8px; color: var(--nexus-gold);
+    }
+  }
+
+  .sidebar-nav { padding: 12px 10px; flex: 1; }
+
+  .nav-item {
+    border-radius: 8px; margin-bottom: 2px;
+    color: var(--nexus-muted);
+    transition: background 0.2s, color 0.2s;
+
+    mat-icon { color: rgba(201, 160, 85, 0.4); transition: color 0.2s; }
+
+    &:hover {
+      background: var(--nexus-gold-dim); color: var(--nexus-white);
+      mat-icon { color: var(--nexus-gold); }
+    }
+
+    &.active-link {
+      background: rgba(201, 160, 85, 0.1); color: var(--nexus-gold);
+      mat-icon { color: var(--nexus-gold); }
+    }
+  }
+}

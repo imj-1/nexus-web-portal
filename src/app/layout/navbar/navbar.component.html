@@ -1,0 +1,39 @@
+<mat-toolbar class="nexus-navbar">
+
+  @if (showHamburger) {
+    <button mat-icon-button class="hamburger" aria-label="Toggle sidebar" (click)="onToggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
+
+  <a class="brand" routerLink="/" aria-label="Nexus home">NEXUS</a>
+
+  <span class="spacer"></span>
+
+  <nav class="nav-links" aria-label="Main navigation">
+    <a mat-button routerLink="/features">Features</a>
+    <a mat-button routerLink="/about">About</a>
+    <a mat-button routerLink="/contact">Contact</a>
+  </nav>
+
+  <!-- Profile menu — will be conditionally shown once auth is wired -->
+  <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item routerLink="/profile">
+      <mat-icon>person</mat-icon><span>Profile</span>
+    </button>
+    <button mat-menu-item routerLink="/settings">
+      <mat-icon>settings</mat-icon><span>Settings</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="onSignOut()">
+      <mat-icon>logout</mat-icon><span>Sign Out</span>
+    </button>
+  </mat-menu>
+
+  <button mat-flat-button class="signin-btn" routerLink="/auth/login">Sign In</button>
+
+</mat-toolbar>
