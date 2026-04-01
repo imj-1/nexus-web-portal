@@ -1,0 +1,105 @@
+<div class="nexus-home">
+
+  <app-navbar [showHamburger]="false"></app-navbar>
+
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <span class="eyebrow">THE FUTURE OF BANKING IS HERE</span>
+      <h1 class="hero-h1">Your Wealth,<br><em>Engineered</em><br>For Growth.</h1>
+      <p class="hero-sub">
+        Nexus combines institutional-grade financial infrastructure with elegant simplicity —
+        built for those who expect more from their bank.
+      </p>
+      <div class="ctas">
+        <a class="btn-primary" routerLink="/auth/register">Open Your Account</a>
+        <a class="btn-ghost" routerLink="/features">Explore Features</a>
+      </div>
+    </div>
+    <div class="scroll-hint"></div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    @for (s of stats; track s.label) {
+      <div class="stat-item">
+        <span class="stat-v">{{ s.value }}</span>
+        <span class="stat-l">{{ s.label }}</span>
+      </div>
+    }
+  </div>
+
+  <section class="features">
+    <div class="container">
+      <span class="sec-eye">WHAT SETS US APART</span>
+      <h2 class="sec-h2">Banking at the Speed<br>of Your Ambition</h2>
+      <div class="feat-grid">
+        @for (f of features; track f.title) {
+          <div class="feat-card">
+            <em class="feat-ico">{{ f.icon }}</em>
+            <h3 class="feat-h3">{{ f.title }}</h3>
+            <p class="feat-p">{{ f.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="container">
+      <div class="trust-inner">
+        <div>
+          <span class="sec-eye">BANK-GRADE SECURITY</span>
+          <h2 class="sec-h2">Enterprise Protection.<br>Personal Simplicity.</h2>
+          <p class="trust-body">
+            Your financial security isn't a feature — it's our foundation.
+            Every layer of Nexus is engineered to protect what matters most.
+          </p>
+        </div>
+        <div class="badges">
+          @for (b of trustBadges; track b) {
+            <div class="badge">
+              <span class="badge-chk">✓</span>
+              <span>{{ b }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <span class="sec-eye">WHAT MEMBERS SAY</span>
+      <h2 class="sec-h2">Trusted by Those<br>Who Demand More</h2>
+      <div class="testi-grid">
+        @for (t of testimonials; track t.author) {
+          <div class="testi-card">
+            <p class="testi-q">{{ t.quote }}</p>
+            <p class="testi-name">{{ t.author }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="cta-glow"></div>
+    <div class="container cta-inner">
+      <h2 class="cta-h2">The Upgrade You've<br>Been Waiting For.</h2>
+      <p class="cta-sub">
+        Join 180,000 members who've already made the switch.<br>
+        Takes five minutes to open your account — and zero regrets after.
+      </p>
+      <a class="btn-primary btn-lg" routerLink="/auth/register">Get Started — It's Free</a>
+      <p class="cta-note">No minimum balance &nbsp;·&nbsp; No hidden fees &nbsp;·&nbsp; Cancel anytime</p>
+    </div>
+  </section>
+
+  <footer class="nexus-footer">
+    <p class="footer-brand">NEXUS</p>
+    <p class="footer-copy">© 2025 Nexus Banking, Inc. All rights reserved. Member FDIC. Equal Housing Lender.</p>
+  </footer>
+
+</div>
