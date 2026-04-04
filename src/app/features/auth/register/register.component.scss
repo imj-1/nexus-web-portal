@@ -1,0 +1,196 @@
+.register-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: var(--nexus-navy);
+  overflow: hidden;
+}
+
+.register-glow {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 700px;
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(201, 160, 85, .07) 0%, transparent 65%);
+}
+
+.register-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(201, 160, 85, .03) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(201, 160, 85, .03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.register-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  padding: 52px 48px;
+  background: var(--nexus-navy-2);
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, .4);
+}
+
+.card-brand {
+  display: block;
+  text-align: center;
+  font-family: var(--nexus-fd);
+  font-size: 18px;
+  letter-spacing: 8px;
+  color: var(--nexus-gold);
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: opacity .2s;
+
+  &:hover {
+    opacity: .7;
+  }
+}
+
+.card-title {
+  font-family: var(--nexus-fd);
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--nexus-white);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.card-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--nexus-muted);
+  text-align: center;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Override Angular Material colours to match Nexus theme
+.nexus-field {
+  width: 100%;
+
+  &.full {
+    grid-column: 1 / -1;
+  }
+
+  ::ng-deep {
+    .mat-mdc-form-field-flex {
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--nexus-border) !important;
+    }
+
+    &:hover .mdc-notched-outline__leading,
+    &:hover .mdc-notched-outline__notch,
+    &:hover .mdc-notched-outline__trailing {
+      border-color: rgba(201, 160, 85, .4) !important;
+    }
+
+    &.mat-focused .mdc-notched-outline__leading,
+    &.mat-focused .mdc-notched-outline__notch,
+    &.mat-focused .mdc-notched-outline__trailing {
+      border-color: var(--nexus-gold) !important;
+    }
+
+    .mat-mdc-floating-label, label {
+      color: var(--nexus-muted) !important;
+    }
+
+    &.mat-focused label {
+      color: var(--nexus-gold) !important;
+    }
+
+    input.mat-mdc-input-element {
+      color: var(--nexus-white) !important;
+      caret-color: var(--nexus-gold);
+    }
+
+    .mat-icon-button {
+      color: var(--nexus-muted);
+    }
+  }
+}
+
+.server-error {
+  font-size: 13px;
+  color: #f28b82;
+  text-align: center;
+  margin: 4px 0;
+}
+
+.btn-submit {
+  width: 100%;
+  height: 52px;
+  margin-top: 8px;
+  background: var(--nexus-gold);
+  color: var(--nexus-navy);
+  font-family: var(--nexus-fb);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, transform .15s, box-shadow .2s;
+
+  &:hover:not(:disabled) {
+    background: var(--nexus-gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px rgba(201, 160, 85, .28);
+  }
+
+  &:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+  }
+}
+
+.signin-prompt {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--nexus-muted);
+}
+
+.signin-link {
+  color: var(--nexus-gold);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity .2s;
+
+  &:hover {
+    opacity: .7;
+  }
+}
