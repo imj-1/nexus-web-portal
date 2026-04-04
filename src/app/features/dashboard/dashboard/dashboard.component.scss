@@ -1,0 +1,325 @@
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--nexus-white);
+  font-family: var(--nexus-fb);
+}
+
+/* ── HEADER ───────────────────────────────────────────── */
+.dash-header {
+  margin-bottom: 40px;
+}
+
+.dash-title {
+  font-family: var(--nexus-fd);
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--nexus-white);
+  margin: 0 0 6px;
+}
+
+.dash-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--nexus-muted);
+  margin: 0;
+}
+
+/* ── SECTIONS ─────────────────────────────────────────── */
+.section {
+  background: var(--nexus-navy-2);
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-family: var(--nexus-fd);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--nexus-white);
+  margin: 0 0 24px;
+}
+
+.section-head .section-title {
+  margin: 0;
+}
+
+.placeholder-badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--nexus-navy);
+  background: var(--nexus-gold);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── ACCOUNTS ─────────────────────────────────────────── */
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.total-card {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 24px 28px;
+  background: rgba(201, 160, 85, .08);
+  border: 1px solid var(--nexus-border);
+  border-radius: 8px;
+}
+
+.card-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--nexus-muted);
+  text-transform: uppercase;
+}
+
+.card-value {
+  font-family: var(--nexus-fd);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--nexus-gold);
+  line-height: 1;
+}
+
+.account-card {
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, .02);
+  border: 1px solid var(--nexus-border);
+  border-radius: 8px;
+  transition: border-color .2s;
+
+  &:hover {
+    border-color: rgba(201, 160, 85, .35);
+  }
+}
+
+.account-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.account-icon {
+  color: var(--nexus-gold);
+  font-size: 18px;
+}
+
+.account-number {
+  font-size: 12px;
+  color: var(--nexus-muted);
+  letter-spacing: 1px;
+}
+
+.account-balance {
+  font-family: var(--nexus-fd);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--nexus-white);
+}
+
+/* ── BOTTOM GRID ──────────────────────────────────────── */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── SPENDING CHART ───────────────────────────────────── */
+.donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.donut {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+
+.donut-ring {
+  fill: none;
+  stroke-width: 18;
+}
+
+.donut-label {
+  fill: var(--nexus-muted);
+  font-size: 10px;
+  text-anchor: middle;
+  transform: rotate(90deg);
+  transform-origin: 60px 60px;
+}
+
+.donut-value {
+  fill: var(--nexus-gold);
+  font-size: 13px;
+  font-weight: 600;
+  text-anchor: middle;
+  transform: rotate(90deg);
+  transform-origin: 60px 60px;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-label {
+  flex: 1;
+  color: var(--nexus-muted);
+}
+
+.legend-amount {
+  color: var(--nexus-white);
+  font-weight: 500;
+}
+
+/* ── TRANSFER ─────────────────────────────────────────── */
+.transfer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nexus-field {
+  width: 100%;
+
+  ::ng-deep {
+    .mat-mdc-form-field-flex {
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--nexus-border) !important;
+    }
+
+    &:hover .mdc-notched-outline__leading,
+    &:hover .mdc-notched-outline__notch,
+    &:hover .mdc-notched-outline__trailing {
+      border-color: rgba(201, 160, 85, .4) !important;
+    }
+
+    &.mat-focused .mdc-notched-outline__leading,
+    &.mat-focused .mdc-notched-outline__notch,
+    &.mat-focused .mdc-notched-outline__trailing {
+      border-color: var(--nexus-gold) !important;
+    }
+
+    .mat-mdc-floating-label, label {
+      color: var(--nexus-muted) !important;
+    }
+
+    &.mat-focused label {
+      color: var(--nexus-gold) !important;
+    }
+
+    input.mat-mdc-input-element {
+      color: var(--nexus-white) !important;
+      caret-color: var(--nexus-gold);
+    }
+
+    .mat-mdc-select-value-text {
+      color: var(--nexus-white) !important;
+    }
+
+    .mat-mdc-select-arrow {
+      color: var(--nexus-muted) !important;
+    }
+  }
+}
+
+.btn-transfer {
+  width: 100%;
+  height: 50px;
+  margin-top: 4px;
+  background: var(--nexus-gold);
+  color: var(--nexus-navy);
+  font-family: var(--nexus-fb);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+
+  &:hover {
+    background: var(--nexus-gold-light);
+    transform: translateY(-1px);
+  }
+}
+
+.transfer-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+
+  mat-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    color: var(--nexus-gold);
+  }
+
+  p {
+    color: var(--nexus-white);
+    font-size: 15px;
+    margin: 0;
+  }
+}
+
+/* ── UTILITIES ────────────────────────────────────────── */
+.centered {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.error-msg {
+  color: #f28b82;
+  font-size: 14px;
+  text-align: center;
+}

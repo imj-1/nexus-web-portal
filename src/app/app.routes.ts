@@ -21,10 +21,16 @@ export const routes: Routes = [
     path: '',
     component: ShellComponent,   // Layout shell wraps all protected routes
     // canActivate: [AuthGuard],
-    children: []
+    children: [
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      }
+    ]
   },
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: ''
   }
 ];

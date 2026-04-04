@@ -1,0 +1,118 @@
+<div class="dashboard">
+
+  <header class="dash-header">
+    <div>
+      <h1 class="dash-title">Dashboard</h1>
+      <p class="dash-sub">Welcome back. Here's your financial overview.</p>
+    </div>
+  </header>
+
+  <!-- ── ACCOUNTS ───────────────────────────────── -->
+  <section class="section">
+    <h2 class="section-title">Accounts</h2>
+
+    @if (loadingAccounts) {
+      <div class="centered">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+    } @else if (accountsError) {
+      <p class="error-msg">{{ accountsError }}</p>
+    } @else {
+      <div class="accounts-grid">
+        <div class="total-card">
+          <span class="card-label">Total Balance</span>
+          <span class="card-value">{{ totalBalance | currency }}</span>
+        </div>
+        @for (account of accounts; track account.id) {
+          <div class="account-card">
+            <div class="account-top">
+              <mat-icon class="account-icon">account_balance</mat-icon>
+              <span class="account-number">{{ account.accountNumber }}</span>
+            </div>
+            <span class="account-balance">{{ account.balance | currency }}</span>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  <div class="bottom-grid">
+
+    <!-- ── SPENDING CHART ──────────────────────── -->
+    <section class="section chart-section">
+      <div class="section-head">
+        <h2 class="section-title">Spending Overview</h2>
+        <span class="placeholder-badge">Placeholder data</span>
+      </div>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 120 120" class="donut">
+          @for (item of spendingData; track item.label; let i = $index) {
+            <circle
+              class="donut-ring"
+              r="45" cx="60" cy="60"
+              [style.stroke]="item.color"
+              [style.stroke-dasharray]="(item.percent * 2.827) + ' ' + (282.7 - item.percent * 2.827)"
+              [style.stroke-dashoffset]="getOffset(i)">
+            </circle>
+          }
+          <text x="60" y="55" class="donut-label">Total</text>
+          <text x="60" y="70" class="donut-value">$5,000</text>
+        </svg>
+        <div class="legend">
+          @for (item of spendingData; track item.label) {
+            <div class="legend-item">
+              <span class="legend-dot" [style.background]="item.color"></span>
+              <span class="legend-label">{{ item.label }}</span>
+              <span class="legend-amount">{{ item.amount | currency }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ── QUICK TRANSFER ──────────────────────── -->
+    <section class="section transfer-section">
+      <h2 class="section-title">Quick Transfer</h2>
+
+      @if (transferSubmitted) {
+        <div class="transfer-success">
+          <mat-icon>check_circle</mat-icon>
+          <p>Transfer submitted successfully.</p>
+          <button mat-button (click)="transferSubmitted = false">New Transfer</button>
+        </div>
+      } @else {
+        <form [formGroup]="transferForm" (ngSubmit)="onTransfer()" class="transfer-form">
+
+          <mat-form-field appearance="outline" class="nexus-field">
+            <mat-label>From Account</mat-label>
+            <mat-select formControlName="fromAccount">
+              @for (account of accounts; track account.id) {
+                <mat-option [value]="account.id">
+                  {{ account.accountNumber }} — {{ account.balance | currency }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="nexus-field">
+            <mat-label>To Account Number</mat-label>
+            <input matInput formControlName="toAccount" placeholder="Enter account number"/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="nexus-field">
+            <mat-label>Amount</mat-label>
+            <span matTextPrefix>$ &nbsp;</span>
+            <input matInput type="number" formControlName="amount" placeholder="0.00"/>
+            @if (transferForm.get('amount')?.touched && transferForm.get('amount')?.hasError('min')) {
+              <mat-error>Amount must be greater than zero</mat-error>
+            }
+          </mat-form-field>
+
+          <button class="btn-transfer" type="submit">Transfer Funds</button>
+
+        </form>
+      }
+    </section>
+
+  </div>
+</div>
