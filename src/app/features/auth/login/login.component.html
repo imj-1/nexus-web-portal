@@ -1,0 +1,59 @@
+<div class="login-page">
+  <div class="login-glow"></div>
+  <div class="login-grid"></div>
+
+  <div class="login-card">
+
+    <a class="card-brand" routerLink="/">NEXUS</a>
+    <h1 class="card-title">Welcome Back</h1>
+    <p class="card-sub">Sign in to access your Nexus account.</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="login-form">
+
+      <mat-form-field appearance="outline" class="nexus-field full">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="email" type="email" autocomplete="email"/>
+        @if (email.touched && email.hasError('required')) {
+          <mat-error>Email is required</mat-error>
+        }
+        @if (email.touched && email.hasError('email')) {
+          <mat-error>Enter a valid email address</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="nexus-field full">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password"
+               [type]="hidePassword ? 'password' : 'text'"
+               autocomplete="current-password"/>
+        <button mat-icon-button matSuffix type="button"
+                (click)="hidePassword = !hidePassword"
+                [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (password.touched && password.hasError('required')) {
+          <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+
+      @if (serverError) {
+        <p class="server-error">{{ serverError }}</p>
+      }
+
+      <button class="btn-submit" type="submit" [disabled]="loading">
+        @if (loading) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          Sign In
+        }
+      </button>
+
+    </form>
+
+    <p class="register-prompt">
+      Not a member yet?
+      <a routerLink="/auth/register" class="register-link">Open an Account</a>
+    </p>
+
+  </div>
+</div>
