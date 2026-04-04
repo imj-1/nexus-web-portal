@@ -13,6 +13,11 @@ export const routes: Routes = [
       import('./features/auth/register/register.component').then(m => m.RegisterComponent)
   },
   {
+    path: 'auth/login',
+    loadComponent: () =>
+      import('./features/auth/login/login.component').then(m => m.LoginComponent)
+  },
+  {
     path: '',
     component: ShellComponent,   // Layout shell wraps all protected routes
     // canActivate: [AuthGuard],
