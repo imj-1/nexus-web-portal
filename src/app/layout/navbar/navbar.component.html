@@ -16,24 +16,48 @@
     <a mat-button routerLink="/contact">Contact</a>
   </nav>
 
-  <!-- Profile menu — will be conditionally shown once auth is wired -->
-  <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
-    <mat-icon>account_circle</mat-icon>
-  </button>
+  @if (authService.isLoggedIn()) {
+    <!-- Authenticated state -->
+    <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
 
-  <mat-menu #profileMenu="matMenu">
-    <button mat-menu-item routerLink="/profile">
-      <mat-icon>person</mat-icon><span>Profile</span>
-    </button>
-    <button mat-menu-item routerLink="/settings">
-      <mat-icon>settings</mat-icon><span>Settings</span>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="onSignOut()">
-      <mat-icon>logout</mat-icon><span>Sign Out</span>
-    </button>
-  </mat-menu>
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item routerLink="/profile">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button mat-menu-item routerLink="/settings">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onSignOut()">
+        <mat-icon>logout</mat-icon>
+        <span>Sign Out</span>
+      </button>
+    </mat-menu>
 
-  <button mat-flat-button class="signin-btn" routerLink="/auth/login">Sign In</button>
+    <button class="signin-btn" mat-flat-button (click)="onSignOut()">Sign Out</button>
+
+  } @else {
+    <!-- Unauthenticated state -->
+    <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item routerLink="/auth/login">
+        <mat-icon>login</mat-icon>
+        <span>Sign In</span>
+      </button>
+      <button mat-menu-item routerLink="/auth/register">
+        <mat-icon>person_add</mat-icon>
+        <span>Open an Account</span>
+      </button>
+    </mat-menu>
+
+    <a class="signin-btn" mat-flat-button routerLink="/auth/login">Sign In</a>
+  }
 
 </mat-toolbar>
