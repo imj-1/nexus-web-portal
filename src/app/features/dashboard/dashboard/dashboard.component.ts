@@ -9,6 +9,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AccountDTO, AccountService} from '../../../core/services/account.service';
+import {MatDivider} from '@angular/material/divider';
+import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +24,10 @@ import {AccountDTO, AccountService} from '../../../core/services/account.service
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDivider,
+    MatMenu,
+    MatMenuTrigger
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -88,5 +93,31 @@ export class DashboardComponent implements OnInit {
       offset += this.spendingData[i].percent * 2.827;
     }
     return circumference - offset;
+  }
+
+  accountsExpanded = true;
+
+  toggleAccounts(): void {
+    this.accountsExpanded = !this.accountsExpanded;
+  }
+
+  onTransferMoney(account: AccountDTO): void {
+    // TODO: wire to transfer flow
+    console.log('Transfer from account:', account.accountNumber);
+  }
+
+  onViewDetails(account: AccountDTO): void {
+    // TODO: navigate to account details route
+    console.log('View details for:', account.accountNumber);
+  }
+
+  onViewStatements(account: AccountDTO): void {
+    // TODO: navigate to statements route
+    console.log('View statements for:', account.accountNumber);
+  }
+
+  onViewTransferActivity(account: AccountDTO): void {
+    // TODO: navigate to transfer activity route
+    console.log('View transfer activity for:', account.accountNumber);
   }
 }

@@ -323,3 +323,200 @@
   font-size: 14px;
   text-align: center;
 }
+
+
+/* ── ACCOUNTS ACCORDION ───────────────────────────────── */
+.accounts-section {
+  padding: 0;
+  overflow: hidden;
+}
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .2s;
+  border-radius: 12px;
+
+  &:hover {
+    background: rgba(255, 255, 255, .02);
+  }
+
+  .section-title {
+    margin: 0;
+  }
+}
+
+.toggle-caret {
+  color: var(--nexus-gold);
+  transition: transform .3s ease;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+
+  &.rotated {
+    transform: rotate(-90deg);
+  }
+}
+
+.accounts-list {
+  padding: 0 32px 24px;
+}
+
+.account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 0;
+  flex-wrap: wrap;
+}
+
+/* ── ACCOUNT INFO ─────────────────────────────────────── */
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.account-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.account-icon {
+  color: var(--nexus-gold);
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.account-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.account-number {
+  font-size: 12px;
+  color: var(--nexus-muted);
+  letter-spacing: 1.5px;
+  font-weight: 500;
+}
+
+.account-balance {
+  font-family: var(--nexus-fd);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--nexus-white);
+  line-height: 1;
+}
+
+/* ── STATS ────────────────────────────────────────────── */
+.account-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--nexus-border);
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.deposit {
+    background: rgba(52, 168, 83, .06);
+
+    mat-icon {
+      color: #34a853;
+    }
+  }
+
+  &.withdrawal {
+    background: rgba(242, 139, 130, .06);
+
+    mat-icon {
+      color: #f28b82;
+    }
+  }
+}
+
+.stat-label {
+  display: block;
+  font-size: 11px;
+  color: var(--nexus-muted);
+  letter-spacing: .5px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--nexus-white);
+}
+
+/* ── ACCOUNT ACTIONS ──────────────────────────────────── */
+.account-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-transfer-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 16px;
+  background: transparent;
+  border: 1px solid var(--nexus-border);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--nexus-white);
+  font-family: var(--nexus-fb);
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color .2s, color .2s, background .2s;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: var(--nexus-gold);
+  }
+
+  &:hover {
+    border-color: var(--nexus-gold);
+    color: var(--nexus-gold);
+    background: rgba(201, 160, 85, .05);
+  }
+}
+
+.more-btn {
+  color: var(--nexus-muted);
+  transition: color .2s;
+
+  &:hover {
+    color: var(--nexus-gold);
+  }
+}
+
+/* ── DIVIDER ──────────────────────────────────────────── */
+mat-divider {
+  border-color: var(--nexus-border) !important;
+}
