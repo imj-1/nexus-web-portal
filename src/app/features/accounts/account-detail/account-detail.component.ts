@@ -49,7 +49,7 @@ export class AccountDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (!id) {
-      this.router.navigate(['/dashboard']);
+      void this.router.navigate(['/dashboard']);
       return;
     }
 
@@ -75,8 +75,20 @@ export class AccountDetailComponent implements OnInit {
         this.currentPage = page;
         this.loadingTxns = false;
       },
-      error: () => {
-        this.txnError = 'Unable to load transactions.';
+      error: (err) => {
+        if (err.status === 404) {
+          this.transactionPage = {
+            content: [],
+            totalPages: 0,
+            totalElements: 0,
+            number: 0,
+            size: this.pageSize,
+            first: true,
+            last: true
+          };
+        } else {
+          this.txnError = 'Unable to load transactions.';
+        }
         this.loadingTxns = false;
       }
     });
