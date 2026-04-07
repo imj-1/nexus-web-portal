@@ -26,6 +26,12 @@ export const routes: Routes = [
         path: 'dashboard',
         loadComponent: () =>
           import('./features/dashboard/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      },
+      {
+        path: 'accounts/:id',
+        loadComponent: () =>
+          import('./features/accounts/account-detail/account-detail.component')
+            .then(m => m.AccountDetailComponent)
       }
     ]
   },
