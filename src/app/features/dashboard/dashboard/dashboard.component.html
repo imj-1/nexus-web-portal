@@ -35,7 +35,10 @@
               <div class="account-top">
                 <mat-icon class="account-icon">account_balance</mat-icon>
                 <div class="account-meta">
-                  <span class="account-number">{{ account.accountNumber }}</span>
+                  <a class="account-number account-link"
+                     [routerLink]="['/accounts', account.id]">
+                    {{ account.accountNumber }}
+                  </a>
                   <span class="account-balance">{{ account.balance | currency }}</span>
                 </div>
               </div>
@@ -67,12 +70,12 @@
                 Transfer Money
               </button>
 
-              <button mat-icon-button [matMenuTriggerFor]="moreMenu" class="more-btn"
-                      aria-label="More options">
-                <mat-icon>more_vert</mat-icon>
+              <button mat-button [matMenuTriggerFor]="moreMenu" #moreTrigger="matMenuTrigger" class="more-btn">
+                More
+                <mat-icon iconPositionEnd [class.rotated]="moreTrigger.menuOpen">arrow_drop_down</mat-icon>
               </button>
 
-              <mat-menu #moreMenu="matMenu">
+              <mat-menu #moreMenu="matMenu" panelClass="nexus-account-menu">
                 <button mat-menu-item (click)="onViewDetails(account)">
                   <mat-icon>info_outline</mat-icon>
                   <span>Account Details</span>

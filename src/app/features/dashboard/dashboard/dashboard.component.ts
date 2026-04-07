@@ -10,7 +10,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AccountDTO, AccountService} from '../../../core/services/account.service';
 import {MatDivider} from '@angular/material/divider';
-import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +28,9 @@ import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
     MatProgressSpinnerModule,
     MatDivider,
     MatMenu,
-    MatMenuTrigger
+    MatMenuTrigger,
+    RouterLink,
+    MatMenuItem
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'

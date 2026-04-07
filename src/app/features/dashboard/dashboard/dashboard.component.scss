@@ -335,7 +335,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 32px;
+  padding: 14px 32px;
   cursor: pointer;
   user-select: none;
   transition: background .2s;
@@ -508,15 +508,51 @@
 }
 
 .more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 38px;
+  padding: 0 12px 0 16px;
+  background: transparent;
+  border: 1px solid var(--nexus-border);
+  border-radius: 4px;
+  cursor: pointer;
   color: var(--nexus-muted);
-  transition: color .2s;
+  font-family: var(--nexus-fb);
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color .2s, color .2s, background .2s;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    transition: transform .2s;
+  }
 
   &:hover {
+    border-color: var(--nexus-gold);
     color: var(--nexus-gold);
+    background: rgba(201, 160, 85, .05);
   }
+}
+
+.more-btn mat-icon.rotated {
+  transform: rotate(180deg);
 }
 
 /* ── DIVIDER ──────────────────────────────────────────── */
 mat-divider {
   border-color: var(--nexus-border) !important;
+}
+
+.account-link {
+  color: var(--nexus-gold);
+  text-decoration: none;
+  transition: opacity .2s;
+
+  &:hover {
+    opacity: .7;
+    text-decoration: underline;
+  }
 }
