@@ -6,8 +6,11 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTableModule} from '@angular/material/table';
 import {MatChipsModule} from '@angular/material/chips';
-import {AccountDTO, AccountService} from '../../../core/services/account.service';
-import {Page, TransactionDTO, TransactionService} from '../../../core/services/transaction.service';
+
+import {AccountDashboardResponse, AccountDTO, AccountService} from '../../../core/services/account.service';
+import {AccountMonthlySummaryDTO, Page, TransactionDTO} from '../../../core/services/transaction.service';
+import {ShortenPrefixPipe} from '../../../shorten-prefix.pipe';
+import {MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   selector: 'app-account-detail',
@@ -19,30 +22,32 @@ import {Page, TransactionDTO, TransactionService} from '../../../core/services/t
     MatProgressSpinnerModule,
     MatTableModule,
     MatChipsModule,
-    RouterLink
+    RouterLink,
+    ShortenPrefixPipe,
+    MatMenuTrigger
   ],
   templateUrl: './account-detail.component.html',
   styleUrl: './account-detail.component.scss'
 })
 export class AccountDetailComponent implements OnInit {
   account: AccountDTO | null = null;
+  monthlySummary: AccountMonthlySummaryDTO | null = null;
   transactionPage: Page<TransactionDTO> | null = null;
-  loadingAccount = true;
-  loadingTxns = true;
-  accountError = '';
+
+  loading = true;      // covers the initial dashboard call
+  loadingTxns = false; // covers pagination-only reloads
+  error = '';
   txnError = '';
+
   currentPage = 0;
   readonly pageSize = 20;
 
-  readonly columns = [
-    'reference', 'type', 'amount', 'status', 'description', 'date'
-  ];
+  readonly columns = ['reference', 'type', 'amount', 'balanceAfter', 'description', 'date'];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService,
-    private transactionService: TransactionService
+    private accountService: AccountService
   ) {
   }
 
@@ -52,44 +57,38 @@ export class AccountDetailComponent implements OnInit {
       void this.router.navigate(['/dashboard']);
       return;
     }
-
-    this.accountService.getAccountById(id).subscribe({
-      next: a => {
-        this.account = a;
-        this.loadingAccount = false;
-      },
-      error: () => {
-        this.accountError = 'Unable to load account.';
-        this.loadingAccount = false;
-      }
-    });
-
-    this.loadTransactions(id, 0);
+    this.loadDashboard(id, 0);
   }
 
-  loadTransactions(accountId: number, page: number): void {
-    this.loadingTxns = true;
-    this.transactionService.getByAccountId(accountId, page, this.pageSize).subscribe({
-      next: p => {
-        this.transactionPage = p;
+  /**
+   * Single call to the gateway aggregation endpoint.
+   * On initial load, sets loading=true (shows full-page spinner).
+   * On page changes, sets loadingTxns=true (keeps account header visible).
+   */
+  loadDashboard(accountId: number, page: number, paginationOnly = false): void {
+    if (paginationOnly) {
+      this.loadingTxns = true;
+    } else {
+      this.loading = true;
+    }
+
+    this.accountService.getDashboard(accountId, page, this.pageSize).subscribe({
+      next: (res: AccountDashboardResponse) => {
+        this.account = res.account;
+        this.monthlySummary = res.monthlySummary;
+        this.transactionPage = res.transactions;
         this.currentPage = page;
+        this.loading = false;
         this.loadingTxns = false;
       },
-      error: (err) => {
-        if (err.status === 404) {
-          this.transactionPage = {
-            content: [],
-            totalPages: 0,
-            totalElements: 0,
-            number: 0,
-            size: this.pageSize,
-            first: true,
-            last: true
-          };
-        } else {
+      error: () => {
+        if (paginationOnly) {
           this.txnError = 'Unable to load transactions.';
+          this.loadingTxns = false;
+        } else {
+          this.error = 'Unable to load account.';
+          this.loading = false;
         }
-        this.loadingTxns = false;
       }
     });
   }
@@ -100,35 +99,79 @@ export class AccountDetailComponent implements OnInit {
 
   nextPage(): void {
     if (!this.transactionPage?.last) {
-      this.loadTransactions(this.accountId, this.currentPage + 1);
+      this.loadDashboard(this.accountId, this.currentPage + 1, true);
     }
   }
 
   prevPage(): void {
     if (!this.transactionPage?.first) {
-      this.loadTransactions(this.accountId, this.currentPage - 1);
+      this.loadDashboard(this.accountId, this.currentPage - 1, true);
     }
   }
 
+  // ── Display helpers ───────────────────────────────────────────────────
+
   typeLabel(type: string): string {
-    return {TRANSFER: 'Transfer', DEPOSIT: 'Deposit', WITHDRAWAL: 'Withdrawal'}[type] ?? type;
+    return ({
+      TRANSFER: 'Transfer',
+      DEPOSIT: 'Deposit',
+      WITHDRAWAL: 'Withdrawal'
+    } as Record<string, string>)[type] ?? type;
   }
 
   typeIcon(type: string): string {
-    return {TRANSFER: 'swap_horiz', DEPOSIT: 'arrow_downward', WITHDRAWAL: 'arrow_upward'}[type] ?? 'receipt';
+    return ({
+      TRANSFER: 'swap_horiz',
+      DEPOSIT: 'arrow_downward',
+      WITHDRAWAL: 'arrow_upward'
+    } as Record<string, string>)[type] ?? 'receipt';
   }
 
   statusClass(status: string): string {
-    return {
+    return ({
       COMPLETED: 'status-completed',
       PENDING: 'status-pending',
       FAILED: 'status-failed',
       REVERSED: 'status-reversed'
-    }[status] ?? '';
+    } as Record<string, string>)[status] ?? '';
   }
 
+  /**
+   * A transaction is a credit from this account's perspective when:
+   * - It's a DEPOSIT (money always comes in)
+   * - It's a TRANSFER and this account is the receiver
+   */
   isCredit(txn: TransactionDTO): boolean {
     return txn.type === 'DEPOSIT' ||
       (txn.type === 'TRANSFER' && txn.toAccountId === this.account?.id);
   }
+
+  private calculateMonthlySummary(transactions: TransactionDTO[]): void {
+    const now = new Date();
+    const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+    const thisMonth = transactions.filter(t => {
+      const d = new Date(t.createdAt);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    });
+
+    this.monthlySummary = {
+      month,
+      totalDeposits: thisMonth
+        .filter(t => t.type === 'DEPOSIT' ||
+          (t.type === 'TRANSFER' && t.toAccountId === this.account?.id))
+        .reduce((sum, t) => sum + Number(t.amount), 0),
+
+      totalWithdrawals: thisMonth
+        .filter(t => t.type === 'WITHDRAWAL' ||
+          (t.type === 'TRANSFER' && t.fromAccountId === this.account?.id))
+        .reduce((sum, t) => sum + Number(t.amount), 0)
+    };
+  }
+
+  accountTypeLabel(type: string): string {
+    return type?.replace(/_/g, ' ') ?? '';
+  }
+
+  protected moreMenu: MatMenuPanel | null | undefined;
 }

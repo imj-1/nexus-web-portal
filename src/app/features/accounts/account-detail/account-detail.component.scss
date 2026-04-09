@@ -1,15 +1,3 @@
-.detail-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: var(--nexus-fb);
-  color: var(--nexus-white);
-}
-
-/* ── HEADER ───────────────────────────────────────────── */
-.detail-header {
-  margin-bottom: 32px;
-}
-
 .back-btn {
   display: inline-flex;
   align-items: center;
@@ -19,7 +7,7 @@
   font-size: 13px;
   font-weight: 500;
   letter-spacing: .5px;
-  margin-bottom: 28px;
+  margin-bottom: 14px;
   transition: color .2s;
 
   mat-icon {
@@ -35,39 +23,163 @@
 
 .account-hero {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 24px;
-  padding: 36px;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
   background: var(--nexus-navy-2);
   border: 1px solid var(--nexus-border);
   border-radius: 12px;
 }
 
-.account-label {
+/* ──── CENTERED HEADER ──────────────────────────────────── */
+.hero-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.account-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(201, 160, 85, .1);
+  border: 1px solid rgba(201, 160, 85, .25);
+  margin-bottom: 4px;
+
+  mat-icon {
+    color: var(--nexus-gold);
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.account-type-badge {
   display: block;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  color: var(--nexus-muted);
-  margin-bottom: 8px;
-}
-
-.account-balance {
   font-family: var(--nexus-fd);
-  font-size: 52px;
-  font-weight: 600;
-  color: var(--nexus-gold);
-  line-height: 1;
-  margin: 0;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--nexus-white);
 }
 
+.account-number-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--nexus-muted);
+  font-family: monospace;
+}
+
+/* ── STATS GRID ───────────────────────────────────────── */
+.hero-stats {
+  display: grid;
+  gap: 1px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hero-stats-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 0;
+  background: var(--nexus-navy-3);
+  color: var(--nexus-muted);
+}
+
+.hero-account-number {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.hero-stats-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--nexus-navy-2);
+}
+
+.hero-stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--nexus-muted);
+}
+
+.hero-stat-label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-stat-value {
+  font-family: var(--nexus-fd);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--nexus-white);
+
+  &.gold {
+    color: var(--nexus-gold);
+  }
+}
+
+.stat-dir-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+
+  &.deposit-icon {
+    color: #34a853;
+  }
+
+  &.withdrawal-icon {
+    color: #f28b82;
+  }
+}
+
+.deposit-value {
+  color: #34a853;
+  font-weight: 500;
+}
+
+.withdrawal-value {
+  color: #f28b82;
+  font-weight: 500;
+}
+
+.primary {
+  font-size: 48px;
+}
+
+/* ── DIVIDER ──────────────────────────────────────────── */
+.hero-divider {
+  height: 1px;
+  background: var(--nexus-border);
+}
+
+/* ── ACTIONS ROW ──────────────────────────────────────── */
 .hero-actions {
   display: flex;
+  justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
 }
+
 
 .btn-action {
   display: inline-flex;
@@ -81,7 +193,7 @@
   cursor: pointer;
   color: var(--nexus-white);
   font-family: var(--nexus-fb);
-  font-size: 13px;
+  font-size: 16px;
   transition: border-color .2s, color .2s, background .2s;
 
   mat-icon {
@@ -98,26 +210,19 @@
   }
 }
 
-/* ── SECTION ──────────────────────────────────────────── */
-.section {
-  background: var(--nexus-navy-2);
-  border: 1px solid var(--nexus-border);
-  border-radius: 12px;
-  padding: 32px;
-}
 
+/* ── SECTION ──────────────────────────────────────────── */
 .section-title {
   font-family: var(--nexus-fd);
   font-size: 22px;
   font-weight: 400;
   color: var(--nexus-white);
-  margin: 0 0 24px;
+  margin: 24px 0 24px;
 }
 
 /* ── TABLE ────────────────────────────────────────────── */
 .txn-table {
   width: 100%;
-  background: transparent;
 
   ::ng-deep {
     .mat-mdc-header-row {
@@ -297,3 +402,4 @@
   font-size: 14px;
   text-align: center;
 }
+
