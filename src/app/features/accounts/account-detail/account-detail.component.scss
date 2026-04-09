@@ -109,7 +109,6 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 10px 12px;
   background: var(--nexus-navy-2);
 }
 
@@ -124,7 +123,6 @@
 .hero-stat-label-row {
   display: flex;
   align-items: center;
-  gap: 6px;
 }
 
 .hero-stat-value {
@@ -164,6 +162,7 @@
 
 .primary {
   font-size: 48px;
+  margin: 0 0 14px;
 }
 
 /* ── DIVIDER ──────────────────────────────────────────── */
