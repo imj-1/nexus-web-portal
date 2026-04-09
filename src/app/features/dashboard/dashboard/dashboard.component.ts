@@ -12,6 +12,8 @@ import {AccountDTO, AccountService} from '../../../core/services/account.service
 import {MatDivider} from '@angular/material/divider';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {RouterLink} from '@angular/router';
+import {AccountMonthlySummaryDTO, TransactionService} from '../../../core/services/transaction.service';
+import {catchError, forkJoin, of} from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,6 +41,14 @@ export class DashboardComponent implements OnInit {
   accounts: AccountDTO[] = [];
   loadingAccounts = true;
   accountsError = '';
+  accountsExpanded = true;
+
+  /**
+   * Keyed by accountId. Populated in parallel after accounts load.
+   * Kept separate so a summary failure never breaks the account list.
+   */
+  summaries: Record<number, AccountMonthlySummaryDTO> = {};
+  loadingSummaries = false;
 
   transferForm: FormGroup;
   transferSubmitted = false;
@@ -54,6 +64,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
+    private transactionService: TransactionService,
     private fb: FormBuilder
   ) {
     this.transferForm = this.fb.group({
@@ -76,6 +87,34 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Fire one getMonthlySummary() per account in parallel.
+   * A failure on any single summary is swallowed — the chip just shows nothing.
+   */
+  private loadSummaries(accounts: AccountDTO[]): void {
+    if (!accounts.length) return;
+    this.loadingSummaries = true;
+
+    const summaryRequests = accounts.map(a =>
+      this.transactionService.getMonthlySummary(a.id).pipe(
+        catchError(() => of(null))
+      )
+    );
+
+    forkJoin(summaryRequests).subscribe(results => {
+      results.forEach((summary, i) => {
+        if (summary) {
+          this.summaries[accounts[i].id] = summary;
+        }
+      });
+      this.loadingSummaries = false;
+    });
+  }
+
+  getSummary(accountId: number): AccountMonthlySummaryDTO | null {
+    return this.summaries[accountId] ?? null;
+  }
+
   get totalBalance(): number {
     return this.accounts.reduce((sum, a) => sum + Number(a.balance), 0);
   }
@@ -85,7 +124,6 @@ export class DashboardComponent implements OnInit {
       this.transferForm.markAllAsTouched();
       return;
     }
-    // TODO: wire to transfer endpoint when available on account-service
     this.transferSubmitted = true;
   }
 
@@ -97,8 +135,6 @@ export class DashboardComponent implements OnInit {
     }
     return circumference - offset;
   }
-
-  accountsExpanded = true;
 
   toggleAccounts(): void {
     this.accountsExpanded = !this.accountsExpanded;

@@ -44,20 +44,32 @@
               </div>
 
               <div class="account-stats">
+
                 <div class="stat-chip deposit">
                   <mat-icon>arrow_upward</mat-icon>
                   <div>
                     <span class="stat-label">Deposits this month</span>
-                    <!-- TODO: replace with real transaction data -->
-                    <span class="stat-value">$0.00</span>
+                    @if (loadingSummaries) {
+                      <span class="stat-value">—</span>
+                    } @else {
+                      <span class="stat-value">
+                        {{ (getSummary(account.id)?.totalDeposits ?? 0) | currency }}
+                      </span>
+                    }
                   </div>
                 </div>
+
                 <div class="stat-chip withdrawal">
                   <mat-icon>arrow_downward</mat-icon>
                   <div>
                     <span class="stat-label">Withdrawals this month</span>
-                    <!-- TODO: replace with real transaction data -->
-                    <span class="stat-value">$0.00</span>
+                    @if (loadingSummaries) {
+                      <span class="stat-value">—</span>
+                    } @else {
+                      <span class="stat-value">
+                        {{ (getSummary(account.id)?.totalWithdrawals ?? 0) | currency }}
+                      </span>
+                    }
                   </div>
                 </div>
               </div>
