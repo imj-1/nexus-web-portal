@@ -14,6 +14,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {RouterLink} from '@angular/router';
 import {AccountMonthlySummaryDTO, TransactionService} from '../../../core/services/transaction.service';
 import {catchError, forkJoin, of} from 'rxjs';
+import {ShortenPrefixPipe} from '../../../shorten-prefix.pipe';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,7 +33,8 @@ import {catchError, forkJoin, of} from 'rxjs';
     MatMenu,
     MatMenuTrigger,
     RouterLink,
-    MatMenuItem
+    MatMenuItem,
+    ShortenPrefixPipe
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -158,5 +160,9 @@ export class DashboardComponent implements OnInit {
   onViewTransferActivity(account: AccountDTO): void {
     // TODO: navigate to transfer activity route
     console.log('View transfer activity for:', account.accountNumber);
+  }
+
+  accountTypeLabel(type: string): string {
+    return type?.replace(/_/g, ' ') ?? '';
   }
 }

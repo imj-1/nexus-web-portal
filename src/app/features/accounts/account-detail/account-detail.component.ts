@@ -123,8 +123,8 @@ export class AccountDetailComponent implements OnInit {
   typeIcon(type: string): string {
     return ({
       TRANSFER: 'swap_horiz',
-      DEPOSIT: 'arrow_downward',
-      WITHDRAWAL: 'arrow_upward'
+      DEPOSIT: 'arrow_upward',
+      WITHDRAWAL: 'arrow_downward'
     } as Record<string, string>)[type] ?? 'receipt';
   }
 

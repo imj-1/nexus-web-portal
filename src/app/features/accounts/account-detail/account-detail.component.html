@@ -44,7 +44,7 @@
                   +{{ monthlySummary?.totalDeposits ?? 0 | currency }}
                 </span>
               <div class="hero-stat-label-row">
-                <mat-icon class="stat-dir-icon deposit-icon">arrow_downward</mat-icon>
+                <mat-icon class="stat-dir-icon deposit-icon">arrow_upward</mat-icon>
                 <span class="hero-stat-label">Deposits this month</span>
               </div>
             </div>
@@ -54,7 +54,7 @@
                 -{{ monthlySummary?.totalWithdrawals ?? 0 | currency }}
               </span>
               <div class="hero-stat-label-row">
-                <mat-icon class="stat-dir-icon withdrawal-icon">arrow_upward</mat-icon>
+                <mat-icon class="stat-dir-icon withdrawal-icon">arrow_downward</mat-icon>
                 <span class="hero-stat-label">Withdrawals this month</span>
               </div>
             </div>
@@ -69,11 +69,11 @@
             Transfer
           </button>
           <button class="btn-action">
-            <mat-icon>arrow_downward</mat-icon>
+            <mat-icon>arrow_upward</mat-icon>
             Deposit
           </button>
           <button class="btn-action">
-            <mat-icon>arrow_upward</mat-icon>
+            <mat-icon>arrow_downward</mat-icon>
             Withdraw
           </button>
           <button mat-button [matMenuTriggerFor]="moreMenu ?? null" #moreTrigger="matMenuTrigger" class="btn-action">
@@ -156,7 +156,7 @@
         <tr mat-header-row *matHeaderRowDef="columns"></tr>
         <tr mat-row *matRowDef="let row; columns: columns;" class="txn-row"></tr>
       </table>
-      
+
       <!-- Pagination -->
       <div class="pagination">
         <button class="btn-page prev" (click)="prevPage()" [disabled]="transactionPage.first">

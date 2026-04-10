@@ -30,90 +30,90 @@
 
           <div class="account-row">
 
-            <!-- Left — account info -->
             <div class="account-info">
               <div class="account-top">
-                <mat-icon class="account-icon">account_balance</mat-icon>
-                <div class="account-meta">
-                  <a class="account-number account-link"
-                     [routerLink]="['/accounts', account.id]">
-                    {{ account.accountNumber }}
-                  </a>
-                  <span class="account-balance">{{ account.balance | currency }}</span>
+                <a class="account-top-link" [routerLink]="['/accounts', account.id]">
+                  <mat-icon class="account-icon">account_balance</mat-icon>
+                  <span class="account-type-badge">{{ accountTypeLabel(account.accountType) }}</span>
+                  ({{ account.accountNumber | shortenPrefix:4 }})
+                  <span>></span>
+                </a>
+                <!-- More Actions -->
+                <div class="account-actions">
+                  <button class="btn-transfer-sm" (click)="onTransferMoney(account)">
+                    <mat-icon>swap_horiz</mat-icon>
+                    Transfer Money
+                  </button>
+
+                  <button mat-button [matMenuTriggerFor]="moreMenu" #moreTrigger="matMenuTrigger" class="more-btn">
+                    More
+                    <mat-icon iconPositionEnd [class.rotated]="moreTrigger.menuOpen">arrow_drop_down</mat-icon>
+                  </button>
+
+                  <mat-menu #moreMenu="matMenu" panelClass="nexus-account-menu">
+                    <button mat-menu-item (click)="onViewDetails(account)">
+                      <mat-icon>info_outline</mat-icon>
+                      <span>Account Details</span>
+                    </button>
+                    <button mat-menu-item (click)="onViewStatements(account)">
+                      <mat-icon>description</mat-icon>
+                      <span>Statements</span>
+                    </button>
+                    <button mat-menu-item (click)="onViewTransferActivity(account)">
+                      <mat-icon>compare_arrows</mat-icon>
+                      <span>Transfer Activity</span>
+                    </button>
+                  </mat-menu>
                 </div>
+
               </div>
 
               <div class="account-stats">
 
-                <div class="stat-chip deposit">
-                  <mat-icon>arrow_upward</mat-icon>
-                  <div>
-                    <span class="stat-label">Deposits this month</span>
-                    @if (loadingSummaries) {
-                      <span class="stat-value">—</span>
-                    } @else {
-                      <span class="stat-value">
-                        {{ (getSummary(account.id)?.totalDeposits ?? 0) | currency }}
-                      </span>
-                    }
-                  </div>
+                <div class="account-stats-balance">
+                  <span class="balance-value primary">{{ account.availableBalance | currency }}</span>
+                  <span class="balance-label">Available Balance</span>
                 </div>
 
-                <div class="stat-chip withdrawal">
-                  <mat-icon>arrow_downward</mat-icon>
-                  <div>
-                    <span class="stat-label">Withdrawals this month</span>
-                    @if (loadingSummaries) {
-                      <span class="stat-value">—</span>
-                    } @else {
-                      <span class="stat-value">
+                <div class="monthly-stats">
+                  <div class="stat-chip deposit">
+                    <mat-icon>arrow_upward</mat-icon>
+                    <div>
+                      <span class="stat-label">Deposits this month</span>
+                      @if (loadingSummaries) {
+                        <span class="stat-value">—</span>
+                      } @else {
+                        <span class="stat-value">
+                        {{ (getSummary(account.id)?.totalDeposits ?? 0) | currency }}
+                      </span>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="stat-chip withdrawal">
+                    <mat-icon>arrow_downward</mat-icon>
+                    <div>
+                      <span class="stat-label">Withdrawals this month</span>
+                      @if (loadingSummaries) {
+                        <span class="stat-value">—</span>
+                      } @else {
+                        <span class="stat-value">
                         {{ (getSummary(account.id)?.totalWithdrawals ?? 0) | currency }}
                       </span>
-                    }
+                      }
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Right — actions -->
-            <div class="account-actions">
-              <button class="btn-transfer-sm" (click)="onTransferMoney(account)">
-                <mat-icon>swap_horiz</mat-icon>
-                Transfer Money
-              </button>
-
-              <button mat-button [matMenuTriggerFor]="moreMenu" #moreTrigger="matMenuTrigger" class="more-btn">
-                More
-                <mat-icon iconPositionEnd [class.rotated]="moreTrigger.menuOpen">arrow_drop_down</mat-icon>
-              </button>
-
-              <mat-menu #moreMenu="matMenu" panelClass="nexus-account-menu">
-                <button mat-menu-item (click)="onViewDetails(account)">
-                  <mat-icon>info_outline</mat-icon>
-                  <span>Account Details</span>
-                </button>
-                <button mat-menu-item (click)="onViewStatements(account)">
-                  <mat-icon>description</mat-icon>
-                  <span>Statements</span>
-                </button>
-                <button mat-menu-item (click)="onViewTransferActivity(account)">
-                  <mat-icon>compare_arrows</mat-icon>
-                  <span>Transfer Activity</span>
-                </button>
-              </mat-menu>
-            </div>
-
           </div>
 
           @if (!last) {
             <mat-divider></mat-divider>
           }
-
         }
       </div>
-
     }
-
   </section>
 
   <div class="bottom-grid">
