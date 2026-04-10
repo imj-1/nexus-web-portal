@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
@@ -27,7 +27,7 @@ export class NavbarComponent {
   @Input() showHamburger = true;
   @Output() sidebarToggle = new EventEmitter<void>();
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, private router: Router) {
   }
 
   onToggle(): void {
@@ -36,5 +36,13 @@ export class NavbarComponent {
 
   onSignOut(): void {
     this.authService.logout();
+  }
+
+  onBrandClick() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }
