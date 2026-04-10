@@ -10,7 +10,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {AccountDashboardResponse, AccountDTO, AccountService} from '../../../core/services/account.service';
 import {AccountMonthlySummaryDTO, Page, TransactionDTO} from '../../../core/services/transaction.service';
 import {ShortenPrefixPipe} from '../../../shorten-prefix.pipe';
-import {MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
+import {MatMenuModule, MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   selector: 'app-account-detail',
@@ -24,7 +24,8 @@ import {MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
     MatChipsModule,
     RouterLink,
     ShortenPrefixPipe,
-    MatMenuTrigger
+    MatMenuTrigger,
+    MatMenuModule,
   ],
   templateUrl: './account-detail.component.html',
   styleUrl: './account-detail.component.scss'
@@ -42,7 +43,7 @@ export class AccountDetailComponent implements OnInit {
   currentPage = 0;
   readonly pageSize = 20;
 
-  readonly columns = ['reference', 'type', 'amount', 'balanceAfter', 'description', 'date'];
+  readonly columns = ['date', 'description', 'type', 'amount', 'balanceAfter'];
 
   constructor(
     private route: ActivatedRoute,

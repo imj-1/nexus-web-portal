@@ -14,21 +14,28 @@ export interface TransactionDTO {
   amount: number;
   type: TransactionType;
   status: TransactionStatus;
-  initiatedBy: string;
   description: string | null;
   failureReason: string | null;
   createdAt: string;
   updatedAt: string;
+  /** Running balance of the queried account after this transaction settled. */
+  balanceAfter: number | null;
 }
 
 export interface Page<T> {
   content: T[];
   totalElements: number;
   totalPages: number;
-  number: number;   // current page (0-based)
+  number: number;
   size: number;
   first: boolean;
   last: boolean;
+}
+
+export interface AccountMonthlySummaryDTO {
+  month: string;
+  totalDeposits: number;
+  totalWithdrawals: number;
 }
 
 @Injectable({providedIn: 'root'})
@@ -46,6 +53,16 @@ export class TransactionService {
 
     return this.http.get<Page<TransactionDTO>>(
       `${this.base}/account/${accountId}`, {params}
+    );
+  }
+
+  /**
+   * Fetches deposit + withdrawal totals for the current calendar month.
+   * Called by the dashboard to populate per-account stat chips.
+   */
+  getMonthlySummary(accountId: number): Observable<AccountMonthlySummaryDTO> {
+    return this.http.get<AccountMonthlySummaryDTO>(
+      `${this.base}/account/${accountId}/summary`
     );
   }
 }

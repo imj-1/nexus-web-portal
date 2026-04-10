@@ -211,17 +211,27 @@
 
 
 /* ── SECTION ──────────────────────────────────────────── */
+.section {
+  background: var(--nexus-navy-2);
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  padding: 32px;
+  display: block;
+  height: auto;
+}
+
 .section-title {
   font-family: var(--nexus-fd);
   font-size: 22px;
   font-weight: 400;
   color: var(--nexus-white);
-  margin: 24px 0 24px;
+  margin: 24px 0 0;
 }
 
 /* ── TABLE ────────────────────────────────────────────── */
 .txn-table {
   width: 100%;
+  background: transparent !important;
 
   ::ng-deep {
     .mat-mdc-header-row {
