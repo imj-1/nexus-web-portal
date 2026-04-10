@@ -40,7 +40,8 @@
                 </a>
                 <!-- More Actions -->
                 <div class="account-actions">
-                  <button class="btn-transfer-sm" (click)="onTransferMoney(account)">
+                  <button class="btn-transfer-sm" [routerLink]="['/transfer', account.id]"
+                          (click)="onTransferMoney(account)">
                     <mat-icon>swap_horiz</mat-icon>
                     Transfer Money
                   </button>

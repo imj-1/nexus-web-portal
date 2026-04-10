@@ -4,6 +4,7 @@ import {ShellComponent} from './layout/shell/shell.component';
 export const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     loadComponent: () =>
       import('./layout/home/home.component').then(m => m.HomeComponent)
   },
@@ -32,6 +33,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/accounts/account-detail/account-detail.component')
             .then(m => m.AccountDetailComponent)
+      },
+      {
+        path: 'transfer/:accountId',
+        loadComponent: () =>
+          import('./features/transfer/transfer.component').then(m => m.TransferComponent)
       }
     ]
   },

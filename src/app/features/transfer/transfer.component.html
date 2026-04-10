@@ -1,0 +1,63 @@
+<div class="transfer-container">
+  <h2>Internal Transfer</h2>
+
+  @if (loading) {
+    <div class="loading-shade">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Transfer From</mat-label>
+        <mat-select formControlName="transferFrom">
+          @for (account of accounts; track account.id) {
+            <mat-option [value]="account.id">
+              {{ account.accountType | titlecase }} (...{{ account.accountNumber | shortenPrefix:4 }})
+              <span class="balance-hint">: {{ account.balance | currency }}</span>
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>Source account is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Transfer To</mat-label>
+        <mat-select formControlName="transferTo">
+          @for (account of accounts; track account.id) {
+            <mat-option [value]="account.id" [disabled]="account.id === transferForm.get('transferFrom')?.value">
+              {{ account.accountType | titlecase }} (...{{ account.accountNumber | shortenPrefix:4 }})
+              <span class="balance-hint">: {{ account.balance | currency }}</span>
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>Destination account is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" formControlName="amount" placeholder="0.00">
+        <span matPrefix>$&nbsp;</span>
+        <mat-error>Minimum transfer is $1.00</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Transfer Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="transferDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Note (Optional)</mat-label>
+        <textarea matInput formControlName="note" placeholder="What is this for?"></textarea>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="transferForm.invalid">
+          Confirm Transfer
+        </button>
+      </div>
+    </form>
+  }
+</div>

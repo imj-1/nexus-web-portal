@@ -1,0 +1,96 @@
+.transfer-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 32px;
+  background: var(--nexus-navy-2);
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+  h2 {
+    font-family: var(--nexus-fd);
+    font-size: 2.4rem;
+    color: var(--nexus-gold);
+    margin-bottom: 32px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  /* Customizing Material Form Fields to match Nexus Theme */
+  ::ng-deep {
+    .mat-mdc-form-field {
+      width: 100%;
+
+      /* The Label */
+      .mat-mdc-form-field-label {
+        color: var(--nexus-white) !important;
+      }
+
+      /* The Outline/Border */
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--nexus-border) !important;
+      }
+
+      /* Focus State */
+      &.mat-focused {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: var(--nexus-gold) !important;
+          border-width: 1px !important;
+        }
+
+        .mat-mdc-form-field-label {
+          color: var(--nexus-gold) !important;
+        }
+      }
+
+      /* Input text color */
+      .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+        color: var(--nexus-white);
+      }
+    }
+
+    /* Select/Dropdown styling */
+    .mat-mdc-select-value, .mat-mdc-select-arrow {
+      color: var(--nexus-white);
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+
+  button[mat-flat-button] {
+    background-color: var(--nexus-gold);
+    color: var(--nexus-navy);
+    font-family: var(--nexus-fb);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 24px 48px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &:hover:not([disabled]) {
+      background-color: var(--nexus-gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201, 160, 85, 0.3);
+    }
+
+    &[disabled] {
+      background-color: var(--nexus-border);
+      color: var(--nexus-muted);
+    }
+  }
+}
