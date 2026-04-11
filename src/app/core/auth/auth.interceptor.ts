@@ -1,13 +1,47 @@
-import {HttpInterceptorFn} from '@angular/common/http';
+import {HttpErrorResponse, HttpInterceptorFn} from '@angular/common/http';
 import {inject} from '@angular/core';
-import {AuthService} from './auth.service';
+import {KeycloakService} from 'keycloak-angular';
+import {EMPTY, from, throwError} from 'rxjs';
+import {catchError, switchMap} from 'rxjs/operators';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = inject(AuthService).getAccessToken();
+const PUBLIC_URLS = ['/api/v1/auth/register'];
 
-  if (!token || req.url.includes('/api/v1/auth/')) return next(req);
+export const authInterceptor: HttpInterceptorFn = (
+  req,
+  next
+) => {
+  const keycloak = inject(KeycloakService);
 
-  return next(req.clone({
-    setHeaders: {Authorization: `Bearer ${token}`}
-  }));
+  // Skip interceptor for public endpoints
+  if (PUBLIC_URLS.some(url => req.url.includes(url))) {
+    return next(req);
+  }
+
+  return from(keycloak.getToken()).pipe(
+    switchMap(token => {
+      const authReq = req.clone({
+        setHeaders: {Authorization: `Bearer ${token}`}
+      });
+      return next(authReq).pipe(
+        catchError(err => {
+          if (err instanceof HttpErrorResponse && err.status === 401) {
+            return from(keycloak.updateToken(30)).pipe(
+              switchMap(() => from(keycloak.getToken())),
+              switchMap(newToken => {
+                const retryReq = req.clone({
+                  setHeaders: {Authorization: `Bearer ${newToken}`}
+                });
+                return next(retryReq);
+              }),
+              catchError(() => {
+                void keycloak.login();
+                return EMPTY;
+              })
+            );
+          }
+          return throwError(() => err);
+        })
+      );
+    })
+  );
 };
