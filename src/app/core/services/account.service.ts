@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {AccountMonthlySummaryDTO, Page, TransactionDTO} from './transaction.service';
+import {KeycloakService} from 'keycloak-angular';
+import {switchMap} from 'rxjs/operators';
 
 export interface AccountDTO {
   id: number;
@@ -23,11 +25,15 @@ export interface AccountDashboardResponse {
 export class AccountService {
   private base = `${environment.apiGatewayUrl}/api/v1/accounts`;
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(
+    private http: HttpClient,
+    private keycloak: KeycloakService
+  ) {}
 
   getAllAccounts(): Observable<AccountDTO[]> {
-    return this.http.get<AccountDTO[]>(this.base);
+    return from(this.keycloak.updateToken(60)).pipe(
+      switchMap(() => this.http.get<AccountDTO[]>(this.base))
+    );
   }
 
   getAccountById(id: number): Observable<AccountDTO> {
@@ -38,7 +44,11 @@ export class AccountService {
    * Single aggregated call to the gateway's /dashboard endpoint.
    * Returns account details, monthly summary, and paginated transactions in one shot.
    */
-  getDashboard(accountId: number, page = 0, size = 20): Observable<AccountDashboardResponse> {
+  getDashboard(
+    accountId: number,
+    page = 0,
+    size = 20
+  ): Observable<AccountDashboardResponse> {
     const params = new HttpParams()
       .set('page', page)
       .set('size', size);

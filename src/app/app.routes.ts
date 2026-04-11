@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {ShellComponent} from './layout/shell/shell.component';
+import {authGuard} from './core/auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -14,14 +15,9 @@ export const routes: Routes = [
       import('./features/auth/register/register.component').then(m => m.RegisterComponent)
   },
   {
-    path: 'auth/login',
-    loadComponent: () =>
-      import('./features/auth/login/login.component').then(m => m.LoginComponent)
-  },
-  {
     path: '',
     component: ShellComponent,   // Layout shell wraps all protected routes
-    // canActivate: [AuthGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: 'dashboard',

@@ -16,13 +16,12 @@
     <a mat-button routerLink="/contact">Contact</a>
   </nav>
 
-  @if (authService.isLoggedIn()) {
-    <!-- Authenticated state -->
-    <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
-      <mat-icon>account_circle</mat-icon>
-    </button>
+  <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
 
-    <mat-menu #profileMenu="matMenu">
+  <mat-menu #profileMenu="matMenu">
+    @if (isLoggedIn()) {
       <button mat-menu-item routerLink="/profile">
         <mat-icon>person</mat-icon>
         <span>Profile</span>
@@ -36,18 +35,8 @@
         <mat-icon>logout</mat-icon>
         <span>Sign Out</span>
       </button>
-    </mat-menu>
-
-    <button class="signin-btn" mat-flat-button (click)="onSignOut()">Sign Out</button>
-
-  } @else {
-    <!-- Unauthenticated state -->
-    <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-
-    <mat-menu #profileMenu="matMenu">
-      <button mat-menu-item routerLink="/auth/login">
+    } @else {
+      <button mat-menu-item (click)="onSignIn()">
         <mat-icon>login</mat-icon>
         <span>Sign In</span>
       </button>
@@ -55,9 +44,13 @@
         <mat-icon>person_add</mat-icon>
         <span>Open an Account</span>
       </button>
-    </mat-menu>
+    }
+  </mat-menu>
 
-    <a class="signin-btn" mat-flat-button routerLink="/auth/login">Sign In</a>
+  @if (isLoggedIn()) {
+    <button class="signin-btn" mat-flat-button (click)="onSignOut()">Sign Out</button>
+  } @else {
+    <a class="signin-btn" mat-flat-button (click)="onSignIn()">Sign In</a>
   }
 
 </mat-toolbar>

@@ -40,11 +40,30 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  refresh(): Observable<LoginResponse> {
+    const refreshToken = localStorage.getItem('refresh_token');
+    return this.http.post<LoginResponse>(`${this.base}/refresh`, {
+      refresh_token: refreshToken
+    }).pipe(
+      tap(res => this.storeTokens(res))
+    );
+  }
+
   getAccessToken(): string | null {
     return localStorage.getItem('access_token');
   }
 
+  getRefreshToken(): string | null {
+    return localStorage.getItem('refresh_token');
+  }
+
   isLoggedIn(): boolean {
     return !!this.getAccessToken();
+  }
+
+  private storeTokens(res: LoginResponse): void {
+    localStorage.setItem('access_token', res.access_token);
+    localStorage.setItem('refresh_token', res.refresh_token);
+    localStorage.setItem('expires_in', String(res.expires_in));
   }
 }

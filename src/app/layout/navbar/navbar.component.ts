@@ -6,7 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
-import {AuthService} from '../../core/auth/auth.service';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -27,22 +27,28 @@ export class NavbarComponent {
   @Input() showHamburger = true;
   @Output() sidebarToggle = new EventEmitter<void>();
 
-  constructor(public authService: AuthService, private router: Router) {
-  }
+  constructor(
+    private router: Router,
+    private keycloak: KeycloakService
+  ) {}
 
   onToggle(): void {
     this.sidebarToggle.emit();
   }
 
-  onSignOut(): void {
-    this.authService.logout();
+  isLoggedIn(): boolean {
+    return this.keycloak.isLoggedIn();
   }
 
-  onBrandClick() {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.router.navigate(['/']);
-    }
+  onSignIn(): void {
+    void this.keycloak.login({redirectUri: window.location.origin + '/dashboard'});
+  }
+
+  onSignOut(): void {
+    void this.keycloak.logout(window.location.origin);
+  }
+
+  onBrandClick(): void {
+    void this.router.navigate([this.keycloak.isLoggedIn() ? '/dashboard' : '/']);
   }
 }
