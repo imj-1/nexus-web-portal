@@ -23,6 +23,7 @@
     color: var(--nexus-gold);
     text-decoration: none;
     transition: opacity 0.2s;
+    cursor: pointer;
 
     &:hover {
       opacity: 0.8;
@@ -117,6 +118,23 @@
         opacity: 1;
         color: var(--nexus-gold);
       }
+    }
+  }
+
+  button[mat-button] {
+    color: var(--nexus-muted);
+    font-family: var(--nexus-fb);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    height: 100%;
+    padding: 0 14px;
+    border-radius: 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--nexus-gold);
     }
   }
 }

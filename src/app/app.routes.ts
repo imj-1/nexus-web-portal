@@ -25,6 +25,11 @@ export const routes: Routes = [
           import('./features/dashboard/dashboard/dashboard.component').then(m => m.DashboardComponent)
       },
       {
+        path: 'accounts/account-onboarding/:productType',
+        loadComponent: () =>
+          import('./features/accounts/account-onboarding/account-onboarding.component').then(m => m.AccountOnboardingComponent)
+      },
+      {
         path: 'accounts/:id',
         loadComponent: () =>
           import('./features/accounts/account-detail/account-detail.component')
@@ -40,11 +45,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/products/savings-accounts/savings-accounts.component').then(m => m.SavingsAccountsComponent),
       },
-      {
-        path: 'accounts/account-onboarding/:productType',
-        loadComponent: () =>
-          import('./features/accounts/account-onboarding/account-onboarding.component').then(m => m.AccountOnboardingComponent)
-      }
     ]
   },
   {

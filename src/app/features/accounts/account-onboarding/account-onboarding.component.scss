@@ -1,0 +1,141 @@
+.onboarding-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  background: var(--nexus-navy);
+}
+
+// ── Header ─────────────────────────────────────────────────
+.page-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.page-title {
+  font-family: var(--nexus-fd);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--nexus-gold);
+  margin: 0 0 12px;
+}
+
+.page-subtitle {
+  font-family: var(--nexus-fb);
+  font-size: 0.95rem;
+  color: var(--nexus-muted);
+  margin: 0;
+}
+
+// ── Form card ──────────────────────────────────────────────
+.onboarding-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(6, 13, 31, 0.82);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--nexus-border);
+  border-radius: 10px;
+  padding: 40px 36px;
+  gap: 8px;
+
+  // ── Mat form field overrides ──────────────────────────
+  mat-form-field {
+    width: 100%;
+
+    .mat-mdc-form-field-flex {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    // Label color
+    .mdc-floating-label {
+      color: var(--nexus-muted) !important;
+    }
+
+    // Input text color
+    input {
+      color: var(--nexus-white) !important;
+      font-family: var(--nexus-fb);
+      font-size: 1rem;
+    }
+
+    // Prefix $ color
+    .mat-mdc-form-field-text-prefix {
+      color: var(--nexus-muted);
+      font-family: var(--nexus-fb);
+    }
+
+    // Outline border color
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--nexus-border) !important;
+    }
+
+    // Focused outline
+    &.mat-focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--nexus-gold) !important;
+      }
+
+      .mdc-floating-label {
+        color: var(--nexus-gold) !important;
+      }
+    }
+  }
+
+  // ── Error message ─────────────────────────────────────
+  .error-msg {
+    font-family: var(--nexus-fb);
+    font-size: 0.82rem;
+    color: #ff6b6b;
+    margin: 4px 0 0;
+    padding: 10px 14px;
+    background: rgba(255, 107, 107, 0.08);
+    border: 1px solid rgba(255, 107, 107, 0.25);
+    border-radius: 6px;
+  }
+
+  // ── Submit button ─────────────────────────────────────
+  .submit-btn {
+    margin-top: 16px; // sits cleanly below the input field
+    width: 100%;
+    height: 44px;
+    background: var(--nexus-gold);
+    color: var(--nexus-navy);
+    font-family: var(--nexus-fb);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: background 0.2s ease, transform 0.15s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--nexus-gold-light);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// ── Responsive ─────────────────────────────────────────────
+@media (max-width: 600px) {
+  .onboarding-form {
+    padding: 28px 20px;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+}

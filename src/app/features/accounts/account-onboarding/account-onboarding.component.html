@@ -1,0 +1,36 @@
+<section class="onboarding-page">
+
+  <div class="page-header">
+    <h1 class="page-title">Open Your Account</h1>
+    <p class="page-subtitle">Just a few details to get started.</p>
+  </div>
+
+  <form class="onboarding-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Initial Deposit</mat-label>
+      <span matTextPrefix>$&nbsp;</span>
+      <input matInput type="number" formControlName="initialBalance" placeholder="0.00"/>
+      <mat-error *ngIf="form.get('initialBalance')?.hasError('required')">
+        An initial deposit is required.
+      </mat-error>
+      <mat-error *ngIf="form.get('initialBalance')?.hasError('min')">
+        Deposit must be $0 or greater.
+      </mat-error>
+    </mat-form-field>
+
+    @if (error) {
+      <p class="error-msg">{{ error }}</p>
+    }
+
+    <button
+      class="submit-btn"
+      mat-flat-button
+      type="submit"
+      [disabled]="form.invalid || loading">
+      {{ loading ? 'Opening Account...' : 'Open Account' }}
+    </button>
+
+  </form>
+
+</section>

@@ -9,7 +9,7 @@ import {switchMap} from 'rxjs/operators';
 export interface AccountDTO {
   id: number;
   accountNumber: string;
-  accountType: 'CHECKING' | 'SAVINGS' | 'MONEY_MARKET';
+  accountType: 'CHECKING' | 'BASIC_SAVINGS' | 'HIGH_YIELD_SAVINGS' | 'CERTIFICATE_OF_DEPOSIT' | 'MONEY_MARKET';
   balance: number;           // presentBalance (settled ledger)
   availableBalance: number;  // balance minus holds
   userId: string;
@@ -21,6 +21,11 @@ export interface AccountDashboardResponse {
   transactions: Page<TransactionDTO>;
 }
 
+export interface CreateAccountRequest {
+  initialBalance: number;
+  accountType: 'CHECKING' | 'BASIC_SAVINGS' | 'HIGH_YIELD_SAVINGS' | 'CERTIFICATE_OF_DEPOSIT' | 'MONEY_MARKET';
+}
+
 @Injectable({providedIn: 'root'})
 export class AccountService {
   private base = `${environment.apiGatewayUrl}/api/v1/accounts`;
@@ -29,6 +34,12 @@ export class AccountService {
     private http: HttpClient,
     private keycloak: KeycloakService
   ) {}
+
+  createAccount(request: CreateAccountRequest): Observable<AccountDTO> {
+    return from(this.keycloak.updateToken(60)).pipe(
+      switchMap(() => this.http.post<AccountDTO>(this.base, request))
+    );
+  }
 
   getAllAccounts(): Observable<AccountDTO[]> {
     return from(this.keycloak.updateToken(60)).pipe(

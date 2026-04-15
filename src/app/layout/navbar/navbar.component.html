@@ -70,11 +70,10 @@
       <mat-icon>trending_up</mat-icon>
       Investments
     </a>
-    <a mat-button routerLink="/explore-products" [matMenuTriggerFor]="exploreProductsMenu"
-       routerLinkActive="active-link">
+    <button mat-button [matMenuTriggerFor]="exploreProductsMenu" routerLinkActive="active-link">
       <mat-icon>explore</mat-icon>
       Explore Products
-    </a>
+    </button>
 
     <mat-menu #exploreProductsMenu="matMenu">
       <button mat-menu-item routerLink="/products/credit-cards">
@@ -87,7 +86,7 @@
       </button>
       <button mat-menu-item routerLink="/products/savings-accounts">
         <mat-icon>savings</mat-icon>
-        <span>Savings Accounts & CD's</span>
+        <span>Savings & CD's</span>
       </button>
       <button mat-menu-item routerLink="/products/mortgages">
         <mat-icon>home</mat-icon>

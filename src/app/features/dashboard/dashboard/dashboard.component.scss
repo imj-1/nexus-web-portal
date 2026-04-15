@@ -403,6 +403,10 @@
   gap: 6px;
   font-size: 18px;
   text-decoration: none;
+
+  &:hover {
+    color: var(--nexus-gold) !important;
+  }
 }
 
 .account-top-link:visited {
