@@ -1,41 +1,141 @@
-.nexus-navbar {
-  position: sticky; top: 0; z-index: 1000;
-  height: 68px; padding: 0 32px;
+// ── Tier 1: Brand bar ──────────────────────────────────────
+.nexus-navbar.tier-1 {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 68px;
+  padding: 0 32px;
   background: rgba(6, 13, 31, 0.93);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--nexus-border);
   box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
 
-  .hamburger { color: var(--nexus-gold); margin-right: 4px; }
-
-  .brand {
-    font-family: var(--nexus-fd); font-size: 22px; font-weight: 600;
-    letter-spacing: 8px; color: var(--nexus-gold); text-decoration: none;
-    transition: opacity 0.2s;
-    &:hover { opacity: 0.8; }
+  .hamburger {
+    color: var(--nexus-gold);
+    margin-right: 4px;
   }
 
-  .spacer { flex: 1 1 auto; }
+  .brand {
+    font-family: var(--nexus-fd);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 8px;
+    color: var(--nexus-gold);
+    text-decoration: none;
+    transition: opacity 0.2s;
 
-  .nav-links {
-    display: flex; gap: 4px; margin-right: 8px;
-    a { font-size: 13px; color: var(--nexus-muted); transition: color 0.2s;
-      &:hover { color: var(--nexus-white); } }
-    @media (max-width: 768px) { display: none; }
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .spacer {
+    flex: 1 1 auto;
   }
 
   .profile-btn {
-    color: var(--nexus-muted); margin: 0 4px;
+    color: var(--nexus-muted);
+    margin: 0 4px;
     transition: color 0.2s;
-    &:hover { color: var(--nexus-gold); }
+
+    &:hover {
+      color: var(--nexus-gold);
+    }
   }
 
   .signin-btn {
-    background: var(--nexus-gold); color: var(--nexus-navy);
-    font-family: var(--nexus-fb); font-weight: 600;
-    font-size: 13px; letter-spacing: 1.5px;
-    height: 38px; padding: 0 22px; border-radius: 4px;
+    background: var(--nexus-gold);
+    color: var(--nexus-navy);
+    font-family: var(--nexus-fb);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    height: 38px;
+    padding: 0 22px;
+    border-radius: 4px;
     transition: background 0.2s, transform 0.15s;
-    &:hover { background: var(--nexus-gold-light); transform: translateY(-1px); }
+
+    &:hover {
+      background: var(--nexus-gold-light);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// ── Tier 2: Nav bar ────────────────────────────────────────
+.tier-2 {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 24px;
+  background: rgba(6, 13, 31, 0.82);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--nexus-border);
+  position: sticky;
+  top: 68px; // sits flush under tier 1
+  z-index: 999;
+
+  a[mat-button] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--nexus-muted);
+    font-family: var(--nexus-fb);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    height: 100%;
+    padding: 0 14px;
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px; // flush with tier border
+    transition: color 0.2s ease, border-color 0.2s ease;
+
+    mat-icon {
+      font-size: 15px;
+      height: 15px;
+      width: 15px;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover {
+      color: var(--nexus-gold);
+      background: rgba(255, 255, 255, 0.04);
+
+      mat-icon {
+        opacity: 1;
+      }
+    }
+
+    &.active-link {
+      color: var(--nexus-gold);
+      border-bottom-color: var(--nexus-gold);
+
+      mat-icon {
+        opacity: 1;
+        color: var(--nexus-gold);
+      }
+    }
+  }
+}
+
+// ── Responsive ─────────────────────────────────────────────
+@media (max-width: 768px) {
+  .tier-2 {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    a[mat-button] {
+      white-space: nowrap;
+      padding: 0 10px;
+      font-size: 11px;
+    }
   }
 }

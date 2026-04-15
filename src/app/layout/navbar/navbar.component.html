@@ -1,56 +1,79 @@
-<mat-toolbar class="nexus-navbar">
+<header class="nexus-header">
 
-  @if (showHamburger) {
-    <button mat-icon-button class="hamburger" aria-label="Toggle sidebar" (click)="onToggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  }
+  <!-- ── Tier 1: Brand bar ── -->
+  <mat-toolbar class="nexus-navbar tier-1">
 
-  <a class="brand" (click)="onBrandClick()" aria-label="Nexus home" style="cursor: pointer">NEXUS</a>
-
-  <span class="spacer"></span>
-
-  <nav class="nav-links" aria-label="Main navigation">
-    <a mat-button routerLink="/features">Features</a>
-    <a mat-button routerLink="/about">About</a>
-    <a mat-button routerLink="/contact">Contact</a>
-  </nav>
-
-  <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-
-  <mat-menu #profileMenu="matMenu">
-    @if (isLoggedIn()) {
-      <button mat-menu-item routerLink="/profile">
-        <mat-icon>person</mat-icon>
-        <span>Profile</span>
-      </button>
-      <button mat-menu-item routerLink="/settings">
-        <mat-icon>settings</mat-icon>
-        <span>Settings</span>
-      </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item (click)="onSignOut()">
-        <mat-icon>logout</mat-icon>
-        <span>Sign Out</span>
-      </button>
-    } @else {
-      <button mat-menu-item (click)="onSignIn()">
-        <mat-icon>login</mat-icon>
-        <span>Sign In</span>
-      </button>
-      <button mat-menu-item routerLink="/auth/register">
-        <mat-icon>person_add</mat-icon>
-        <span>Open an Account</span>
+    @if (showHamburger) {
+      <button mat-icon-button class="hamburger" aria-label="Toggle sidebar" (click)="onToggle()">
+        <mat-icon>menu</mat-icon>
       </button>
     }
-  </mat-menu>
 
-  @if (isLoggedIn()) {
-    <button class="signin-btn" mat-flat-button (click)="onSignOut()">Sign Out</button>
-  } @else {
-    <a class="signin-btn" mat-flat-button (click)="onSignIn()">Sign In</a>
-  }
+    <a class="brand" (click)="onBrandClick()" aria-label="Nexus home">NEXUS</a>
 
-</mat-toolbar>
+    <span class="spacer"></span>
+
+    <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu" aria-label="Account menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #profileMenu="matMenu">
+      @if (isLoggedIn()) {
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item routerLink="/settings">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="onSignOut()">
+          <mat-icon>logout</mat-icon>
+          <span>Sign Out</span>
+        </button>
+      } @else {
+        <button mat-menu-item (click)="onSignIn()">
+          <mat-icon>login</mat-icon>
+          <span>Sign In</span>
+        </button>
+        <button mat-menu-item routerLink="/auth/register">
+          <mat-icon>person_add</mat-icon>
+          <span>Open an Account</span>
+        </button>
+      }
+    </mat-menu>
+
+    @if (isLoggedIn()) {
+      <button class="signin-btn" mat-flat-button (click)="onSignOut()">Sign Out</button>
+    } @else {
+      <a class="signin-btn" mat-flat-button (click)="onSignIn()">Sign In</a>
+    }
+
+  </mat-toolbar>
+
+  <!-- ── Tier 2: Nav bar ── -->
+  <nav class="tier-2" aria-label="Main navigation">
+    <a mat-button routerLink="/accounts" routerLinkActive="active-link">
+      <mat-icon>account_balance_wallet</mat-icon>
+      Accounts
+    </a>
+    <a mat-button routerLink="/pay-transfer" routerLinkActive="active-link">
+      <mat-icon>swap_horiz</mat-icon>
+      Pay &amp; Transfer
+    </a>
+    <a mat-button routerLink="/security-privacy" routerLinkActive="active-link">
+      <mat-icon>shield</mat-icon>
+      Security &amp; Privacy
+    </a>
+    <a mat-button routerLink="/investments" routerLinkActive="active-link">
+      <mat-icon>trending_up</mat-icon>
+      Investments
+    </a>
+    <a mat-button routerLink="/explore-products" routerLinkActive="active-link">
+      <mat-icon>explore</mat-icon>
+      Explore Products
+    </a>
+  </nav>
+
+</header>
