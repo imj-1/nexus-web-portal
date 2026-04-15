@@ -1,0 +1,103 @@
+<section class="savings-page">
+
+  <div class="page-header">
+    <h1 class="page-title">Savings Accounts & CD's</h1>
+    <p class="page-subtitle">Choose the account that fits your financial goals.</p>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- Basic Savings -->
+    <div class="product-card" (click)="onSelect('basic-savings')">
+      <div class="card-icon-wrap">
+        <mat-icon>savings</mat-icon>
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">Basic Savings</h2>
+        <p class="card-rate">2.50% <span class="rate-label">APY</span></p>
+        <p class="card-desc">
+          A no-fuss everyday savings account with no monthly fees and
+          easy access to your funds whenever you need them.
+        </p>
+        <ul class="card-perks">
+          <li>
+            <mat-icon>check</mat-icon>
+            No monthly maintenance fee
+          </li>
+          <li>
+            <mat-icon>check</mat-icon>
+            $25 minimum opening deposit
+          </li>
+          <li>
+            <mat-icon>check</mat-icon>
+            FDIC insured up to $250,000
+          </li>
+        </ul>
+      </div>
+      <button class="card-cta" mat-flat-button>Open Account</button>
+    </div>
+
+    <!-- High Yield Savings -->
+    <div class="product-card featured" (click)="onSelect('high-yield-savings')">
+      <span class="badge">Most Popular</span>
+      <div class="card-icon-wrap">
+        <mat-icon>trending_up</mat-icon>
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">High Yield Savings</h2>
+        <p class="card-rate">5.10% <span class="rate-label">APY</span></p>
+        <p class="card-desc">
+          Maximize your earnings with one of our highest rates — ideal
+          for building an emergency fund or saving toward a big goal.
+        </p>
+        <ul class="card-perks">
+          <li>
+            <mat-icon>check</mat-icon>
+            No monthly maintenance fee
+          </li>
+          <li>
+            <mat-icon>check</mat-icon>
+            $1,000 minimum opening deposit
+          </li>
+          <li>
+            <mat-icon>check</mat-icon>
+            FDIC insured up to $250,000
+          </li>
+        </ul>
+      </div>
+      <button class="card-cta" mat-flat-button>Open Account</button>
+    </div>
+
+    <!-- Certificate of Deposit -->
+    <div class="product-card" (click)="onSelect('cd')">
+      <div class="card-icon-wrap">
+        <mat-icon>lock_clock</mat-icon>
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">Certificate of Deposit</h2>
+        <p class="card-rate">5.40% <span class="rate-label">APY</span></p>
+        <p class="card-desc">
+          Lock in a guaranteed rate for a fixed term — from 3 months
+          to 5 years — and watch your money grow with zero market risk.
+        </p>
+        <ul class="card-perks">
+          <li>
+            <mat-icon>check</mat-icon>
+            Terms from 3 months to 5 years
+          </li>
+          <li>
+            <mat-icon>check</mat-icon>
+            $500 minimum opening deposit
+          </li>
+          <li>
+            <mat-icon>check</mat-icon>
+            FDIC insured up to $250,000
+          </li>
+        </ul>
+      </div>
+      <button class="card-cta" mat-flat-button>Open Account</button>
+    </div>
+
+  </div>
+
+</section>

@@ -34,6 +34,16 @@ export const routes: Routes = [
         path: 'transfer/:accountId',
         loadComponent: () =>
           import('./features/transfer/transfer.component').then(m => m.TransferComponent)
+      },
+      {
+        path: 'products/savings-accounts',
+        loadComponent: () =>
+          import('./features/products/savings-accounts/savings-accounts.component').then(m => m.SavingsAccountsComponent),
+      },
+      {
+        path: 'accounts/account-onboarding/:productType',
+        loadComponent: () =>
+          import('./features/accounts/account-onboarding/account-onboarding.component').then(m => m.AccountOnboardingComponent)
       }
     ]
   },

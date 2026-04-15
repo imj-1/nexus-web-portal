@@ -1,0 +1,180 @@
+.savings-page {
+  min-height: calc(100vh - 112px); // offset both navbar tiers
+  padding: 64px 40px;
+  background: var(--nexus-navy);
+}
+
+// ── Header ─────────────────────────────────────────────────
+.page-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.page-title {
+  font-family: var(--nexus-fd);
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--nexus-gold);
+  margin: 0 0 12px;
+}
+
+.page-subtitle {
+  font-family: var(--nexus-fb);
+  font-size: 1rem;
+  color: var(--nexus-muted);
+  margin: 0;
+}
+
+// ── Grid ───────────────────────────────────────────────────
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+}
+
+// ── Card ───────────────────────────────────────────────────
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(6, 13, 31, 0.82);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--nexus-border);
+  border-radius: 10px;
+  padding: 36px 28px 28px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: var(--nexus-gold);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  &.featured {
+    border-color: var(--nexus-gold);
+    box-shadow: 0 0 0 1px var(--nexus-gold), 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--nexus-gold);
+  color: var(--nexus-navy);
+  font-family: var(--nexus-fb);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+// ── Card internals ─────────────────────────────────────────
+.card-icon-wrap {
+  margin-bottom: 20px;
+
+  mat-icon {
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+    color: var(--nexus-gold);
+    opacity: 0.85;
+  }
+}
+
+.card-title {
+  font-family: var(--nexus-fd);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--nexus-white);
+  margin: 0 0 10px;
+}
+
+.card-rate {
+  font-family: var(--nexus-fd);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--nexus-gold);
+  margin: 0 0 16px;
+  line-height: 1;
+
+  .rate-label {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--nexus-muted);
+    letter-spacing: 1px;
+    margin-left: 4px;
+  }
+}
+
+.card-desc {
+  font-family: var(--nexus-fb);
+  font-size: 0.88rem;
+  color: var(--nexus-muted);
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.card-perks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--nexus-fb);
+    font-size: 0.82rem;
+    color: var(--nexus-muted);
+
+    mat-icon {
+      font-size: 15px;
+      height: 15px;
+      width: 15px;
+      color: var(--nexus-gold);
+      opacity: 0.75;
+    }
+  }
+}
+
+.card-cta {
+  margin-top: 28px;
+  width: 100%;
+  height: 42px;
+  background: var(--nexus-gold);
+  color: var(--nexus-navy);
+  font-family: var(--nexus-fb);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    background: var(--nexus-gold-light);
+    transform: translateY(-1px);
+  }
+}
