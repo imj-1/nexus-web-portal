@@ -81,6 +81,7 @@ export class DashboardComponent implements OnInit {
       next: accounts => {
         this.accounts = accounts;
         this.loadingAccounts = false;
+        this.loadSummaries(accounts);
       },
       error: () => {
         this.accountsError = 'Unable to load accounts.';
@@ -104,7 +105,10 @@ export class DashboardComponent implements OnInit {
     );
 
     forkJoin(summaryRequests).subscribe(results => {
-      results.forEach((summary, i) => {
+      results.forEach((
+        summary,
+        i
+      ) => {
         if (summary) {
           this.summaries[accounts[i].id] = summary;
         }
@@ -118,7 +122,10 @@ export class DashboardComponent implements OnInit {
   }
 
   get totalBalance(): number {
-    return this.accounts.reduce((sum, a) => sum + Number(a.balance), 0);
+    return this.accounts.reduce((
+      sum,
+      a
+    ) => sum + Number(a.balance), 0);
   }
 
   onTransfer(): void {
