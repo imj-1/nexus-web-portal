@@ -9,6 +9,9 @@ import {CommonModule} from '@angular/common';
 import {AccountDTO, AccountService} from '../../core/services/account.service';
 import {ShortenPrefixPipe} from '../../shorten-prefix.pipe';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {TransactionDTO, TransactionService} from '../../core/services/transaction.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-transfer',
@@ -32,9 +35,16 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 })
 export class TransferComponent implements OnInit {
   accounts: AccountDTO[] = [];
+  lastTransaction: TransactionDTO | null = null;
+
+  loading = true;
+  submitting = false;
+  submitError: string | null = null;
 
   private fb = inject(FormBuilder);
   private accountService = inject(AccountService);
+  private transactionService = inject(TransactionService);
+  private snackBar = inject(MatSnackBar);
 
   transferForm = this.fb.group({
     transferFrom: [null as number | null, Validators.required],
@@ -43,7 +53,6 @@ export class TransferComponent implements OnInit {
     transferDate: [new Date(), Validators.required],
     note: ['']
   });
-  protected loading: any;
 
   ngOnInit() {
     this.accountService.getAllAccounts().subscribe({
@@ -58,19 +67,58 @@ export class TransferComponent implements OnInit {
     });
   }
 
-  protected onSubmit() {
-    if (this.transferForm.valid) {
-      // Access the raw data from the form
-      const transferData = this.transferForm.value;
-
-      console.log('Transfer Initiated:', transferData);
-
-      // TODO: Call backend service here:
-      // this.transferService.send(transferData).subscribe(...)
-    } else {
-      // If the user somehow bypassed the [disabled] button,
-      // mark everything as touched to show error messages.
+  protected onSubmit(): void {
+    if (this.transferForm.invalid) {
       this.transferForm.markAllAsTouched();
+      return;
+    }
+
+    const {transferFrom, transferTo, amount, note} = this.transferForm.value;
+
+    this.submitting = true;
+    this.submitError = null;
+
+    this.transactionService.transfer({
+      fromAccountId: transferFrom!,
+      toAccountId: transferTo!,
+      amount: amount!,
+      description: note || undefined
+    }).subscribe({
+      next: (txn) => {
+        this.submitting = false;
+        this.lastTransaction = txn;
+        this.transferForm.reset({transferDate: new Date()});
+        this.snackBar.open(
+          `Transfer successful — ref: ${txn.transactionReference}`,
+          'OK',
+          {duration: 6000}
+        );
+      },
+      error: (err: HttpErrorResponse) => {
+        this.submitting = false;
+        this.submitError = this.resolveErrorMessage(err);
+      }
+    });
+  }
+
+  private resolveErrorMessage(err: HttpErrorResponse): string {
+    // Backend ApiError shape: { status, error, message, timestamp }
+    if (err.error?.message) {
+      return err.error.message;
+    }
+    switch (err.status) {
+      case 422:
+        return 'Insufficient funds to complete this transfer.';
+      case 400:
+        return 'Invalid transfer request. Please check the details.';
+      case 401:
+        return 'Your session has expired. Please log in again.';
+      case 403:
+        return 'You do not have permission to make transfers.';
+      case 503:
+        return 'Transfer service is temporarily unavailable. Please try again shortly.';
+      default:
+        return 'Something went wrong. Please try again.';
     }
   }
 }

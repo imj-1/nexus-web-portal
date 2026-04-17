@@ -53,9 +53,23 @@
         <textarea matInput formControlName="note" placeholder="What is this for?"></textarea>
       </mat-form-field>
 
+      @if (submitError) {
+        <div class="error-banner">
+          {{ submitError }}
+        </div>
+      }
+
       <div class="form-actions">
-        <button mat-flat-button color="primary" type="submit" [disabled]="transferForm.invalid">
-          Confirm Transfer
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="transferForm.invalid || submitting">
+          @if (submitting) {
+            <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+            Confirm Transfer
+          }
         </button>
       </div>
     </form>

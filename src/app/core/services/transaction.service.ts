@@ -6,6 +6,13 @@ import {environment} from '../../../environments/environment';
 export type TransactionType = 'TRANSFER' | 'DEPOSIT' | 'WITHDRAWAL';
 export type TransactionStatus = 'PENDING' | 'COMPLETED' | 'FAILED' | 'REVERSED';
 
+export interface TransferRequest {
+  fromAccountId: number;
+  toAccountId: number;
+  amount: number;
+  description?: string;
+}
+
 export interface TransactionDTO {
   id: number;
   transactionReference: string;
@@ -45,7 +52,15 @@ export class TransactionService {
   constructor(private http: HttpClient) {
   }
 
-  getByAccountId(accountId: number, page = 0, size = 20): Observable<Page<TransactionDTO>> {
+  transfer(request: TransferRequest): Observable<TransactionDTO> {
+    return this.http.post<TransactionDTO>(`${this.base}/transfer`, request);
+  }
+
+  getByAccountId(
+    accountId: number,
+    page = 0,
+    size = 20
+  ): Observable<Page<TransactionDTO>> {
     const params = new HttpParams()
       .set('page', page)
       .set('size', size)

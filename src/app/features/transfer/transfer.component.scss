@@ -93,4 +93,18 @@ form {
       color: var(--nexus-muted);
     }
   }
+
+  .error-banner {
+    background: #FCEBEB;
+    color: #A32D2D;
+    border-left: 3px solid #E24B4A;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .form-actions button mat-spinner {
+    display: inline-block;
+  }
 }
