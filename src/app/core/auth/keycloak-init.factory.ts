@@ -12,6 +12,6 @@ export function initializeKeycloak(keycloak: KeycloakService) {
       silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
       checkLoginIframe: false
     },
-    enableBearerInterceptor: false
+    enableBearerInterceptor: true
   });
 }

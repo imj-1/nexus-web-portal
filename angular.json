@@ -31,8 +31,7 @@
                 "input": "public"
               },
               "src/favicon.ico",
-              "src/assets",
-              "src/silent-check-sso.html"
+              "src/assets"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
