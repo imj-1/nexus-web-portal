@@ -15,6 +15,11 @@ export const routes: Routes = [
       import('./features/auth/register/register.component').then(m => m.RegisterComponent)
   },
   {
+    path: 'auth/verify-email-sent',
+    loadComponent: () =>
+      import('./features/auth/verify-email-sent/verify-email-sent.component').then(m => m.VerifyEmailSentComponent)
+  },
+  {
     path: '',
     component: ShellComponent,   // Layout shell wraps all protected routes
     canActivate: [authGuard],

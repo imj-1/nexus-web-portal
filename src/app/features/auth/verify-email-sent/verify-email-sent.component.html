@@ -1,0 +1,43 @@
+<div class="verify-page">
+  <div class="verify-glow"></div>
+  <div class="verify-grid"></div>
+
+  <div class="verify-card">
+
+    <a class="card-brand" routerLink="/">NEXUS</a>
+
+    <div class="icon-wrap">
+      <mat-icon class="mail-icon">mark_email_read</mat-icon>
+    </div>
+
+    <h1 class="card-title">Check Your Inbox</h1>
+    <p class="card-sub">
+      We sent a verification link to
+    </p>
+    <p class="email-display">{{ email }}</p>
+
+    <div class="instructions">
+      <p>Click the link in the email to verify your account. The link will expire in 24 hours.</p>
+      <p class="hint">Didn't receive it? Check your spam folder or resend below.</p>
+    </div>
+
+    <button class="btn-resend" type="button"
+            (click)="resendEmail()"
+            [disabled]="resending || resendCooldown > 0">
+      @if (resending) {
+        <mat-spinner diameter="18"></mat-spinner>
+      } @else if (resendCooldown > 0) {
+        Resend in {{ resendCooldown }}s
+      } @else {
+        Resend Verification Email
+      }
+    </button>
+
+    <div class="footer-links">
+      <a routerLink="/auth/register" class="link-secondary">Wrong email? Go back</a>
+      <span class="separator">·</span>
+      <a routerLink="/auth/login" class="link-secondary">Already verified? Sign in</a>
+    </div>
+
+  </div>
+</div>

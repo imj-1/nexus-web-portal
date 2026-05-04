@@ -25,4 +25,8 @@ export class UserService {
   register(payload: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${this.base}/register`, payload);
   }
+
+  resendVerification(email: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/resend-verification`, {email});
+  }
 }

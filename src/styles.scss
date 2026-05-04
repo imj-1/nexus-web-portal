@@ -1,18 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --nexus-navy:        #060d1f;
-  --nexus-navy-2:      #0a1628;
-  --nexus-gold:        #c9a055;
-  --nexus-gold-light:  #e8c97a;
-  --nexus-gold-dim:    rgba(201, 160, 85, 0.12);
-  --nexus-white:       #f8f6f0;
-  --nexus-muted:       rgba(248, 246, 240, 0.55);
-  --nexus-border:      rgba(201, 160, 85, 0.15);
-  --nexus-fd:         'Cormorant Garamond', Georgia, serif;
-  --nexus-fb:         'Outfit', system-ui, sans-serif;
+  --nexus-navy: #060d1f;
+  --nexus-navy-2: #0a1628;
+  --nexus-gold: #c9a055;
+  --nexus-gold-light: #e8c97a;
+  --nexus-gold-dim: rgba(201, 160, 85, 0.12);
+  --nexus-white: #f8f6f0;
+  --nexus-muted: rgba(248, 246, 240, 0.55);
+  --nexus-border: rgba(201, 160, 85, 0.15);
+  --nexus-fd: 'Cormorant Garamond', Georgia, serif;
+  --nexus-fb: 'Outfit', system-ui, sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
 html, body {
   height: 100%;
@@ -20,4 +22,10 @@ html, body {
   font-family: var(--nexus-fb);
   background: var(--nexus-navy);
   color: var(--nexus-white);
+}
+
+.nexus-snackbar-success {
+  --mdc-snackbar-container-color: #1a3d2e;
+  --mdc-snackbar-supporting-text-color: #d4f4e2;
+  --mat-snack-bar-button-color: #6ee7b7;
 }

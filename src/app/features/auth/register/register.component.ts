@@ -9,6 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {UserService} from '../../../core/services/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,7 @@ import {HttpErrorResponse} from '@angular/common/http';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -35,7 +36,8 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.form = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -71,7 +73,18 @@ export class RegisterComponent {
     this.serverError = '';
 
     this.userService.register(this.form.getRawValue()).subscribe({
-      next: () => this.router.navigate(['/auth/login']),
+      next: () => {
+        const email = this.form.value.email;
+        this.snackBar.open('Email verification sent!', 'Close', {
+          duration: 4000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['nexus-snackbar-success']
+        });
+        this.router.navigate(['/auth/verify-email-sent'], {
+          queryParams: {email}
+        });
+      },
       error: (err: HttpErrorResponse) => {
         this.loading = false;
         this.serverError = err.error?.message ?? 'Something went wrong. Please try again.';
