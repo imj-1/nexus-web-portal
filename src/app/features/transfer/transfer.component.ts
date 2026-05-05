@@ -1,5 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, inject, OnInit, viewChild} from '@angular/core';
+import {FormBuilder, FormGroupDirective, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatOption, MatSelect} from '@angular/material/select';
@@ -45,6 +45,7 @@ export class TransferComponent implements OnInit {
   private accountService = inject(AccountService);
   private transactionService = inject(TransactionService);
   private snackBar = inject(MatSnackBar);
+  private formDirective = viewChild.required(FormGroupDirective);
 
   transferForm = this.fb.group({
     transferFrom: [null as number | null, Validators.required],
@@ -87,7 +88,7 @@ export class TransferComponent implements OnInit {
       next: (txn) => {
         this.submitting = false;
         this.lastTransaction = txn;
-        this.transferForm.reset({transferDate: new Date()});
+        this.formDirective().resetForm({transferDate: new Date()});
         this.snackBar.open(
           `Transfer successful — ref: ${txn.transactionReference}`,
           'OK',
