@@ -91,7 +91,10 @@ export class TransferComponent implements OnInit {
         this.snackBar.open(
           `Transfer successful — ref: ${txn.transactionReference}`,
           'OK',
-          {duration: 6000}
+          {
+            panelClass: ['nexus-snackbar-success'],
+            duration: 6000
+          }
         );
       },
       error: (err: HttpErrorResponse) => {
