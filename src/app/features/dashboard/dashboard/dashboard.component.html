@@ -117,6 +117,112 @@
     }
   </section>
 
+  <!-- ────── CREDIT CARDS ─────────────────────────── -->
+  <section class="section accounts-section cards-section">
+
+    <div class="section-toggle" (click)="toggleCards()">
+      <h2 class="section-title">Credit Cards</h2>
+      <mat-icon class="toggle-caret" [class.rotated]="!cardsExpanded">
+        expand_more
+      </mat-icon>
+    </div>
+
+    @if (cardsExpanded) {
+      <div class="accounts-list">
+        @for (card of creditCards; track card.id; let last = $last) {
+
+          <div class="account-row">
+
+            <div class="account-info">
+              <div class="account-top">
+                <a class="account-top-link" [routerLink]="['/cards', card.id]">
+                  <mat-icon class="account-icon">credit_card</mat-icon>
+                  <span class="account-type-badge">{{ card.cardNetwork }} {{ card.cardType }}</span>
+                  (•••• {{ card.last4 }})
+                  <span>></span>
+                </a>
+
+                <div class="account-actions">
+                  <button class="btn-transfer-sm" [routerLink]="['/cards', card.id, 'pay']"
+                          (click)="onMakePayment(card)">
+                    <mat-icon>payments</mat-icon>
+                    Make Payment
+                  </button>
+
+                  <button mat-button [matMenuTriggerFor]="cardMenu" #cardTrigger="matMenuTrigger" class="more-btn">
+                    More
+                    <mat-icon iconPositionEnd [class.rotated]="cardTrigger.menuOpen">arrow_drop_down</mat-icon>
+                  </button>
+
+                  <mat-menu #cardMenu="matMenu" panelClass="nexus-account-menu">
+                    <button mat-menu-item (click)="onViewCardDetails(card)">
+                      <mat-icon>info_outline</mat-icon>
+                      <span>Card Details</span>
+                    </button>
+                    <button mat-menu-item (click)="onViewCardStatements(card)">
+                      <mat-icon>description</mat-icon>
+                      <span>Statements</span>
+                    </button>
+                    <button mat-menu-item (click)="onViewCardTransactions(card)">
+                      <mat-icon>receipt_long</mat-icon>
+                      <span>Transaction Activity</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+
+              <div class="account-stats">
+
+                <div class="account-stats-balance">
+                  <span class="balance-value primary">{{ card.currentBalance | currency }}</span>
+                  <span class="balance-label">Current Balance</span>
+                </div>
+
+                <div class="monthly-stats">
+                  <div class="stat-chip">
+                    <mat-icon>credit_score</mat-icon>
+                    <div>
+                      <span class="stat-label">Available credit</span>
+                      <span class="stat-value">{{ card.availableCredit | currency }}</span>
+                    </div>
+                  </div>
+
+                  <div class="stat-chip">
+                    <mat-icon>event</mat-icon>
+                    <div>
+                      <span class="stat-label">Payment due</span>
+                      <span class="stat-value">{{ card.paymentDueDate | date:'MMM d, y' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="stat-chip">
+                    <mat-icon>request_quote</mat-icon>
+                    <div>
+                      <span class="stat-label">Minimum payment</span>
+                      <span class="stat-value">{{ card.minimumPaymentDue | currency }}</span>
+                    </div>
+                  </div>
+
+                  <div class="stat-chip">
+                    <mat-icon>receipt_long</mat-icon>
+                    <div>
+                      <span class="stat-label">Last statement</span>
+                      <span class="stat-value">{{ card.lastStatementBalance | currency }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (!last) {
+            <mat-divider></mat-divider>
+          }
+        }
+      </div>
+    }
+  </section>
+
   <div class="bottom-grid">
 
     <!-- ── SPENDING CHART ──────────────────────── -->

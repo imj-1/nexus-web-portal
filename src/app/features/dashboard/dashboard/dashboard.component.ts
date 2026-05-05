@@ -16,6 +16,18 @@ import {AccountMonthlySummaryDTO, TransactionService} from '../../../core/servic
 import {catchError, forkJoin, of} from 'rxjs';
 import {ShortenPrefixPipe} from '../../../shorten-prefix.pipe';
 
+interface CreditCard {
+  id: number;
+  cardNetwork: string;
+  cardType: string;
+  last4: string;
+  currentBalance: number;
+  availableCredit: number;
+  paymentDueDate: Date;
+  minimumPaymentDue: number;
+  lastStatementBalance: number;
+}
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -171,5 +183,58 @@ export class DashboardComponent implements OnInit {
 
   accountTypeLabel(type: string): string {
     return type?.replace(/_/g, ' ') ?? '';
+  }
+
+  // Inside DashboardComponent — add alongside accountsExpanded
+  cardsExpanded = true;
+
+// Placeholder credit card data — replace when CreditCardService is available
+  creditCards: CreditCard[] = [
+    {
+      id: 1,
+      cardNetwork: 'Visa',
+      cardType: 'Platinum Rewards',
+      last4: '4242',
+      currentBalance: 1247.83,
+      availableCredit: 8752.17,
+      paymentDueDate: new Date('2026-05-25'),
+      minimumPaymentDue: 35.00,
+      lastStatementBalance: 1102.45,
+    },
+    {
+      id: 2,
+      cardNetwork: 'Mastercard',
+      cardType: 'Travel Elite',
+      last4: '8891',
+      currentBalance: 432.10,
+      availableCredit: 14567.90,
+      paymentDueDate: new Date('2026-06-02'),
+      minimumPaymentDue: 25.00,
+      lastStatementBalance: 980.55,
+    },
+  ];
+
+  toggleCards(): void {
+    this.cardsExpanded = !this.cardsExpanded;
+  }
+
+  onMakePayment(card: CreditCard): void {
+    // TODO: wire to payment flow
+    console.log('Make payment for card:', card.last4);
+  }
+
+  onViewCardDetails(card: CreditCard): void {
+    // TODO: navigate to card details route
+    console.log('View card details:', card.last4);
+  }
+
+  onViewCardStatements(card: CreditCard): void {
+    // TODO: navigate to card statements route
+    console.log('View card statements:', card.last4);
+  }
+
+  onViewCardTransactions(card: CreditCard): void {
+    // TODO: navigate to card transactions route
+    console.log('View card transactions:', card.last4);
   }
 }
