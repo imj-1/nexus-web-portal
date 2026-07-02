@@ -1,17 +1,16 @@
 import {KeycloakService} from 'keycloak-angular';
+import {environment} from '../../../environments/environment';
 
 export function initializeKeycloak(keycloak: KeycloakService) {
   return () => keycloak.init({
-    config: {
-      url: 'http://localhost:8180',
-      realm: 'nexus',
-      clientId: 'nexus-web-portal'
-    },
-    initOptions: {
-      onLoad: 'check-sso',
-      silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
-      checkLoginIframe: false
-    },
-    enableBearerInterceptor: true
-  });
+                               config: {
+                                 url: environment.keycloakUrl,
+                                 realm: environment.keycloakRealm,
+                                 clientId: environment.keycloakClientId
+                               },
+                               initOptions: {
+                                 onLoad: 'check-sso',
+                                 silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
+                               }
+                             });
 }
