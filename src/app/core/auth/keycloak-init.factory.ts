@@ -10,7 +10,11 @@ export function initializeKeycloak(keycloak: KeycloakService) {
                                },
                                initOptions: {
                                  onLoad: 'check-sso',
+                                 checkLoginIframe: false,
                                  silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
                                }
-                             });
+                             }).catch((err) => {
+    console.error('Keycloak init failed, continuing without auth:', err);
+    return false;
+  });
 }
