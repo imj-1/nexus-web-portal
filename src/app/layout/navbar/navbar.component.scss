@@ -1,9 +1,21 @@
+// ── Shared layout tokens ───────────────────────────────────
+// Single source of truth for tier heights so sticky offsets
+// never drift out of sync between breakpoints.
+:host {
+  --tier1-h: 68px;
+  --tier2-h: 44px;
+
+  @media (max-width: 768px) {
+    --tier1-h: 56px;
+  }
+}
+
 // ── Tier 1: Brand bar ──────────────────────────────────────
 .nexus-navbar.tier-1 {
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: 68px;
+  height: var(--tier1-h);
   padding: 0 32px;
   background: rgba(6, 13, 31, 0.93);
   backdrop-filter: blur(16px);
@@ -13,6 +25,7 @@
   .hamburger {
     color: var(--nexus-gold);
     margin-right: 4px;
+    flex-shrink: 0;
   }
 
   .brand {
@@ -24,6 +37,7 @@
     text-decoration: none;
     transition: opacity 0.2s;
     cursor: pointer;
+    white-space: nowrap;
 
     &:hover {
       opacity: 0.8;
@@ -37,6 +51,7 @@
   .profile-btn {
     color: var(--nexus-muted);
     margin: 0 4px;
+    flex-shrink: 0;
     transition: color 0.2s;
 
     &:hover {
@@ -54,6 +69,8 @@
     height: 38px;
     padding: 0 22px;
     border-radius: 4px;
+    flex-shrink: 0;
+    white-space: nowrap;
     transition: background 0.2s, transform 0.15s;
 
     &:hover {
@@ -65,21 +82,38 @@
 
 // ── Tier 2: Nav bar ────────────────────────────────────────
 .tier-2 {
-  display: flex;
-  align-items: center;
-  height: 44px;
-  padding: 0 24px;
+  position: sticky;
+  top: var(--tier1-h); // sits flush under tier 1 at every breakpoint
+  z-index: 999;
   background: rgba(6, 13, 31, 0.82);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--nexus-border);
-  position: sticky;
-  top: 68px; // sits flush under tier 1
-  z-index: 999;
 
-  a[mat-button] {
+  // Hidden on desktop; becomes the disclosure row on mobile.
+  .mobile-nav-toggle {
+    display: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    height: var(--tier2-h);
+    padding: 0 24px;
+    overflow-x: auto; // safety net at in-between widths (tablet portrait)
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  a[mat-button],
+  button[mat-button] {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    flex-shrink: 0; // ← the overlap fix: links may no longer compress
+    white-space: nowrap;
     color: var(--nexus-muted);
     font-family: var(--nexus-fb);
     font-size: 12px;
@@ -89,14 +123,13 @@
     height: 100%;
     padding: 0 14px;
     border-radius: 0;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px; // flush with tier border
     transition: color 0.2s ease, border-color 0.2s ease;
 
     mat-icon {
       font-size: 15px;
       height: 15px;
       width: 15px;
+      flex-shrink: 0;
       opacity: 0.6;
       transition: opacity 0.2s ease;
     }
@@ -109,6 +142,11 @@
         opacity: 1;
       }
     }
+  }
+
+  a[mat-button] {
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px; // flush with tier border
 
     &.active-link {
       color: var(--nexus-gold);
@@ -120,40 +158,109 @@
       }
     }
   }
-
-  button[mat-button] {
-    color: var(--nexus-muted);
-    font-family: var(--nexus-fb);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    height: 100%;
-    padding: 0 14px;
-    border-radius: 0;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: var(--nexus-gold);
-    }
-  }
 }
 
 // ── Responsive ─────────────────────────────────────────────
 @media (max-width: 768px) {
-  .tier-2 {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
 
-    &::-webkit-scrollbar {
+  // Tier 1: tighter frame, drop the flat auth button — the
+  // profile menu already covers sign in / sign out on mobile.
+  .nexus-navbar.tier-1 {
+    padding: 0 12px;
+
+    .brand {
+      font-size: 18px;
+      letter-spacing: 5px;
+    }
+
+    .signin-btn {
       display: none;
     }
+  }
 
-    a[mat-button] {
-      white-space: nowrap;
-      padding: 0 10px;
-      font-size: 11px;
+  // Tier 2: collapses into a disclosure menu.
+  .tier-2 {
+
+    .mobile-nav-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      height: var(--tier2-h);
+      padding: 0 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--nexus-muted);
+      font-family: var(--nexus-fb);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      .chevron {
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+        color: var(--nexus-gold);
+        transition: transform 0.25s ease;
+      }
     }
+
+    .nav-links {
+      flex-direction: column;
+      align-items: stretch;
+      height: auto;
+      max-height: 0;
+      padding: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    &.open {
+      .mobile-nav-toggle .chevron {
+        transform: rotate(180deg);
+      }
+
+      .nav-links {
+        max-height: 60vh;
+        overflow-y: auto;
+        border-top: 1px solid var(--nexus-border);
+      }
+    }
+
+    a[mat-button],
+    button[mat-button] {
+      justify-content: flex-start;
+      width: 100%;
+      height: 48px; // comfortable touch target
+      padding: 0 16px;
+
+      mat-icon {
+        font-size: 18px;
+        height: 18px;
+        width: 18px;
+      }
+    }
+
+    // On mobile the active indicator moves from the bottom edge
+    // (invisible in a stacked list) to a left rail.
+    a[mat-button] {
+      border-bottom: none;
+      margin-bottom: 0;
+      border-left: 2px solid transparent;
+
+      &.active-link {
+        border-left-color: var(--nexus-gold);
+        background: rgba(255, 255, 255, 0.03);
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier-2 .nav-links,
+  .tier-2 .mobile-nav-toggle .chevron {
+    transition: none;
   }
 }

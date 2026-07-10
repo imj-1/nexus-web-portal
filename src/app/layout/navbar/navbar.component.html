@@ -53,46 +53,60 @@
   </mat-toolbar>
 
   <!-- ── Tier 2: Nav bar ── -->
-  <nav class="tier-2" aria-label="Main navigation">
-    <a mat-button routerLink="/accounts" routerLinkActive="active-link">
-      <mat-icon>account_balance_wallet</mat-icon>
-      Accounts
-    </a>
-    <a mat-button routerLink="/pay-transfer" routerLinkActive="active-link">
-      <mat-icon>swap_horiz</mat-icon>
-      Pay &amp; Transfer
-    </a>
-    <a mat-button routerLink="/security-privacy" routerLinkActive="active-link">
-      <mat-icon>shield</mat-icon>
-      Security &amp; Privacy
-    </a>
-    <a mat-button routerLink="/investments" routerLinkActive="active-link">
-      <mat-icon>trending_up</mat-icon>
-      Investments
-    </a>
-    <button mat-button [matMenuTriggerFor]="exploreProductsMenu" routerLinkActive="active-link">
-      <mat-icon>explore</mat-icon>
-      Explore Products
+  <nav class="tier-2" [class.open]="mobileMenuOpen()" aria-label="Main navigation">
+
+    <!-- Mobile-only disclosure toggle -->
+    <button
+      type="button"
+      class="mobile-nav-toggle"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      aria-controls="primary-nav-links">
+      <mat-icon class="chevron">expand_more</mat-icon>
+      <span>Menu</span>
     </button>
 
+    <div class="nav-links" id="primary-nav-links">
+      <a mat-button routerLink="/accounts" routerLinkActive="active-link" (click)="closeMobileMenu()">
+        <mat-icon>account_balance_wallet</mat-icon>
+        Accounts
+      </a>
+      <a mat-button routerLink="/pay-transfer" routerLinkActive="active-link" (click)="closeMobileMenu()">
+        <mat-icon>swap_horiz</mat-icon>
+        Pay &amp; Transfer
+      </a>
+      <a mat-button routerLink="/security-privacy" routerLinkActive="active-link" (click)="closeMobileMenu()">
+        <mat-icon>shield</mat-icon>
+        Security &amp; Privacy
+      </a>
+      <a mat-button routerLink="/investments" routerLinkActive="active-link" (click)="closeMobileMenu()">
+        <mat-icon>trending_up</mat-icon>
+        Investments
+      </a>
+      <button mat-button [matMenuTriggerFor]="exploreProductsMenu">
+        <mat-icon>explore</mat-icon>
+        Explore Products
+      </button>
+    </div>
+
     <mat-menu #exploreProductsMenu="matMenu">
-      <button mat-menu-item routerLink="/products/credit-cards">
+      <button mat-menu-item routerLink="/products/credit-cards" (click)="closeMobileMenu()">
         <mat-icon>credit_card</mat-icon>
         <span>Credit Cards</span>
       </button>
-      <button mat-menu-item routerLink="/products/checking-accounts">
+      <button mat-menu-item routerLink="/products/checking-accounts" (click)="closeMobileMenu()">
         <mat-icon>account_balance</mat-icon>
         <span>Checking Accounts</span>
       </button>
-      <button mat-menu-item routerLink="/products/savings-accounts">
+      <button mat-menu-item routerLink="/products/savings-accounts" (click)="closeMobileMenu()">
         <mat-icon>savings</mat-icon>
         <span>Savings & CD's</span>
       </button>
-      <button mat-menu-item routerLink="/products/mortgages">
+      <button mat-menu-item routerLink="/products/mortgages" (click)="closeMobileMenu()">
         <mat-icon>home</mat-icon>
         <span>Mortgages & Equity</span>
       </button>
-      <button mat-menu-item routerLink="/products/nexus-business">
+      <button mat-menu-item routerLink="/products/nexus-business" (click)="closeMobileMenu()">
         <mat-icon>business</mat-icon>
         <span>Nexus Business</span>
       </button>
