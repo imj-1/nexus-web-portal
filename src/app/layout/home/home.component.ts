@@ -11,9 +11,9 @@ import { NavbarComponent } from '../navbar/navbar.component';
 })
 export class HomeComponent {
   stats = [
-    { value: '$4.2B+', label: 'Assets Managed' },
-    { value: '180K+',  label: 'Members'         },
-    { value: '99.98%', label: 'Uptime'           },
+    { value: '100K+', label: '[DEMO] Simulated Users' },
+    { value: '250M+',  label: '[DEMO] Sample Transactions'         },
+    { value: '99.9%', label: 'Uptime Target'           },
     { value: '256-bit',label: 'Encryption'       },
   ];
 
@@ -27,7 +27,7 @@ export class HomeComponent {
   ];
 
   trustBadges = [
-    'FDIC Insured up to $250,000',
+    'Enterprise-grade Security',
     'SOC 2 Type II Certified',
     '256-bit AES Encryption',
     'Biometric Authentication',
@@ -35,8 +35,8 @@ export class HomeComponent {
   ];
 
   testimonials = [
-    { quote: '"Switching to Nexus was the smartest financial decision I\'ve made this decade. The analytics alone paid for themselves."', author: 'MARCUS T. — TECH FOUNDER' },
-    { quote: '"Finally, a bank that moves at the speed of business. Instant international transfers changed everything for our firm."', author: 'PRIYA N. — CFO, CONSULTING GROUP' },
-    { quote: '"The sophistication here rivals private banking — at a fraction of the barriers to entry. I\'m not going back."', author: 'ELENA V. — PORTFOLIO MANAGER' },
+    { quote: '"[DEMO TESTIMONIAL] This application demonstrates excellent UI/UX design principles and responsive architecture."', author: 'SAMPLE USER 1' },
+    { quote: '"[DEMO TESTIMONIAL] The platform showcases modern financial application design patterns and best practices."', author: 'SAMPLE USER 2' },
+    { quote: '"[DEMO TESTIMONIAL] An impressive technical implementation of a banking application interface."', author: 'SAMPLE USER 3' },
   ];
 }
